@@ -1,0 +1,2608 @@
+<!-- =====================================================
+     HearAI — Seção "Explore o Produto" — VERSÃO EXPANDIDA
+     Funcionalidades inteligentes + Segurança + Histórico + Alarmes
+===================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  .hai-section {
+    background: #080808;
+    padding: 80px 40px;
+    font-family: 'DM Sans', sans-serif;
+    color: #f0ede8;
+    box-sizing: border-box;
+  }
+  .hai-section *, .hai-section *::before, .hai-section *::after { box-sizing: border-box; }
+
+  .hai-section {
+    --hg: #0033ff;
+    --hg-light: rgba(29,158,117,0.15);
+    --hg-mid: #0033ff;
+    --hp: #7f77dd;
+    --hp-light: rgba(83,74,183,0.15);
+    --hcoral: #D85A30;
+    --hcoral-light: rgba(216,90,48,0.12);
+    --hborder: rgba(255,255,255,0.08);
+    --hborder-md: rgba(255,255,255,0.14);
+    --hcard: #111111;
+    --hcard2: #161616;
+    --hradius: 16px;
+    --hradius-pill: 100px;
+  }
+
+  .hai-inner { max-width: 1120px; margin: 0 auto; }
+
+  .hai-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: #555; margin-bottom: 10px;
+  }
+  .hai-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 800; letter-spacing: -1.2px;
+    margin-bottom: 36px; color: #f0ede8;
+    line-height: 1.1;
+  }
+  .hai-title em { font-style: normal; color: var(--hg); }
+
+  /* tab bar */
+  .hai-tab-bar {
+    display: flex; gap: 4px; margin-bottom: 36px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--hradius-pill); padding: 4px;
+    width: fit-content; border: 1px solid var(--hborder);
+  }
+  .hai-tab-btn {
+    padding: 8px 20px; border-radius: var(--hradius-pill);
+    background: transparent; border: none;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
+    color: #666; cursor: pointer; transition: all .2s;
+    white-space: nowrap; display: flex; align-items: center; gap: 7px;
+  }
+  .hai-tab-btn i { font-size: 15px; }
+  .hai-tab-btn.active {
+    background: #1e1e1e; color: #f0ede8;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    border: 1px solid var(--hborder-md);
+  }
+
+  .hai-panel { display: none; animation: haiFadeIn .3s ease; }
+  .hai-panel.active { display: block; }
+  @keyframes haiFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── PROTOTYPE LAYOUT ── */
+  .hai-proto-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 48px; align-items: start;
+  }
+
+  /* Phone */
+  .hai-phone {
+    background: #1a1a1a;
+    border-radius: 44px; padding: 14px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.07) inset, 0 40px 80px rgba(0,0,0,0.6);
+    width: 300px; position: relative;
+    flex-shrink: 0;
+  }
+  .hai-phone-notch {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 30px;
+    background: #1a1a1a; border-radius: 0 0 20px 20px; z-index: 10;
+  }
+  .hai-phone-btn {
+    position: absolute; right: -3px; top: 100px;
+    width: 3px; height: 60px; background: #2a2a2a; border-radius: 0 3px 3px 0;
+  }
+  .hai-phone-screen {
+    background: #f7f6f2; border-radius: 32px;
+    overflow: hidden; min-height: 560px;
+    display: flex; flex-direction: column;
+  }
+
+  /* App inner */
+  .hai-app-status {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 36px 18px 8px; font-size: 11px; color: #333; font-weight: 500;
+  }
+  .hai-app-header {
+    padding: 4px 16px 14px; background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+  }
+  .hai-app-hrow {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+  }
+  .hai-app-logorow { display: flex; align-items: center; gap: 8px; }
+  .hai-app-sq {
+    width: 30px; height: 30px; background: var(--hg);
+    border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  }
+  .hai-app-sq i { color: #fff; font-size: 16px; }
+  .hai-app-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #111; }
+  .hai-live-badge {
+    display: flex; align-items: center; gap: 5px;
+    background: #E1F5EE; color: #0033ff;
+    font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 20px;
+  }
+  .hai-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hg); animation: haiPulse 1.5s infinite; }
+  @keyframes haiPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+
+  .hai-lang-row { display: flex; align-items: center; gap: 6px; }
+  .hai-lang-chip {
+    background: #f2f2ef; border-radius: 20px;
+    padding: 5px 10px; font-size: 11px; color: #333;
+    display: flex; align-items: center; gap: 5px; flex: 1;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hai-swap {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; background: #fff; transition: transform .35s;
+    flex-shrink: 0;
+  }
+  .hai-swap:hover { transform: rotate(180deg); }
+  .hai-swap i { font-size: 13px; color: #555; }
+
+  .hai-dev-bar {
+    padding: 8px 16px; background: rgba(83,74,183,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hai-dev-left { display: flex; align-items: center; gap: 8px; }
+  .hai-dev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hp); animation: haiPulse 2s infinite; }
+  .hai-dev-name { font-size: 10px; color: #534AB7; font-weight: 500; font-family: 'DM Sans', sans-serif; }
+  .hai-dev-sub { font-size: 9px; color: #7f77dd; font-family: 'DM Sans', sans-serif; }
+  .hai-batt { font-size: 10px; color: #534AB7; display: flex; align-items: center; gap: 3px; font-family: 'DM Sans', sans-serif; }
+
+  .hai-convo {
+    flex: 1; padding: 12px; display: flex;
+    flex-direction: column; gap: 10px; overflow: hidden;
+  }
+  .hai-convo-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: #aaa; font-weight: 500; font-family: 'DM Sans', sans-serif; }
+  .hai-bubble { border-radius: 16px; padding: 8px 12px; max-width: 86%; }
+  .hai-b-in {
+    background: #fff; align-self: flex-start;
+    border-bottom-left-radius: 4px; border: 1px solid rgba(0,0,0,.06);
+  }
+  .hai-b-out { background: var(--hg); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .hai-b-text { font-size: 11px; line-height: 1.45; font-family: 'DM Sans', sans-serif; }
+  .hai-b-in .hai-b-text { color: #222; }
+  .hai-b-out .hai-b-text { color: #fff; }
+  .hai-b-meta { font-size: 9px; margin-top: 2px; font-family: 'DM Sans', sans-serif; }
+  .hai-b-in .hai-b-meta { color: #aaa; }
+  .hai-b-out .hai-b-meta { color: rgba(255,255,255,.6); }
+  .hai-b-tag {
+    font-size: 9px; color: var(--hg-mid); background: #E1F5EE;
+    border-radius: 6px; padding: 2px 6px;
+    display: inline-block; margin: 3px 0 2px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hai-b-tr { font-size: 10px; font-style: italic; color: #555; margin-top: 1px; font-family: 'DM Sans', sans-serif; }
+
+  .hai-listen {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid rgba(0, 21, 255, 0.2);
+    border-radius: 12px; padding: 7px 12px;
+  }
+  .hai-listen-lbl { font-size: 10px; color: var(--hg); font-weight: 500; font-family: 'DM Sans', sans-serif; }
+  .hai-waves { display: flex; align-items: center; gap: 2px; height: 16px; }
+  .hai-w { width: 3px; background: var(--hg); border-radius: 2px; animation: haiWave 1s ease-in-out infinite; }
+  .hai-w:nth-child(1){height:5px;animation-delay:0s}
+  .hai-w:nth-child(2){height:10px;animation-delay:.1s}
+  .hai-w:nth-child(3){height:14px;animation-delay:.2s}
+  .hai-w:nth-child(4){height:8px;animation-delay:.3s}
+  .hai-w:nth-child(5){height:12px;animation-delay:.4s}
+  .hai-w:nth-child(6){height:6px;animation-delay:.15s}
+  @keyframes haiWave { 0%,100%{transform:scaleY(1);opacity:.5} 50%{transform:scaleY(1.7);opacity:1} }
+
+  .hai-app-nav {
+    display: flex; justify-content: space-around;
+    padding: 10px 0 14px; background: #fff;
+    border-top: 1px solid rgba(0,0,0,.07);
+  }
+  .hai-anav { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+  .hai-anav span { font-size: 9px; color: #bbb; font-family: 'DM Sans', sans-serif; }
+  .hai-anav i { font-size: 18px; color: #ccc; }
+  .hai-anav.on i { color: var(--hg); }
+  .hai-anav.on span { color: var(--hg); }
+
+  /* Right side panel */
+  .hai-proto-right { display: flex; flex-direction: column; gap: 20px; }
+  .hai-proto-ttl {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700;
+    letter-spacing: -.5px; margin-bottom: 6px; color: #f0ede8;
+  }
+  .hai-proto-desc { font-size: 15px; color: #777; line-height: 1.65; font-weight: 300; }
+
+  .hai-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hai-stat {
+    background: var(--hcard2); border-radius: var(--hradius);
+    border: 1px solid var(--hborder); padding: 16px 18px;
+    transition: border-color .2s;
+  }
+  .hai-stat:hover { border-color: var(--hborder-md); }
+  .hai-stat-n { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -1px; }
+  .hai-stat-l { font-size: 12px; color: #555; margin-top: 2px; }
+
+  .hai-feats { display: flex; flex-direction: column; gap: 10px; }
+  .hai-feat-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--hcard2); border-radius: var(--hradius);
+    border: 1px solid var(--hborder); padding: 14px 16px;
+    transition: border-color .2s, transform .2s;
+  }
+  .hai-feat-row:hover { transform: translateX(4px); border-color: var(--hborder-md); }
+  .hai-feat-ico {
+    width: 38px; height: 38px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hai-feat-ico i { font-size: 19px; }
+  .hai-feat-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; color: #e8e5e0; }
+  .hai-feat-desc { font-size: 12px; color: #555; line-height: 1.5; }
+
+  .hai-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .hai-btn-g {
+    background: var(--hg); color: #fff; border: none;
+    border-radius: var(--hradius-pill); padding: 12px 26px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    cursor: pointer; transition: background .2s, transform .15s;
+  }
+  .hai-btn-g:hover { background: var(--hg-mid); transform: translateY(-1px); }
+  .hai-btn-ghost {
+    background: transparent; color: #888; border: 1px solid var(--hborder-md);
+    border-radius: var(--hradius-pill); padding: 12px 26px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all .2s;
+  }
+  .hai-btn-ghost:hover { color: #f0ede8; border-color: rgba(255,255,255,.3); }
+
+  /* ── FEATURES GRID ── */
+  .hai-features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hai-fg-card {
+    background: var(--hcard2); border-radius: var(--hradius);
+    border: 1px solid var(--hborder); padding: 26px 22px;
+    transition: transform .25s, border-color .25s;
+  }
+  .hai-fg-card:hover { transform: translateY(-4px); border-color: var(--hborder-md); }
+  .hai-fg-ico {
+    width: 46px; height: 46px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  }
+  .hai-fg-ico i { font-size: 22px; }
+  .hai-fg-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 8px; color: #e8e5e0; }
+  .hai-fg-desc { font-size: 13px; color: #555; line-height: 1.65; font-weight: 300; }
+
+  /* ── PRICING ── */
+  .hai-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hai-plan {
+    background: var(--hcard2); border-radius: var(--hradius);
+    border: 1px solid var(--hborder); padding: 26px 22px;
+    display: flex; flex-direction: column;
+    transition: transform .25s;
+  }
+  .hai-plan:hover { transform: translateY(-3px); }
+  .hai-plan.featured { background: var(--hg); border-color: var(--hg); }
+  .hai-plan-badge {
+    font-size: 11px; font-weight: 500; padding: 4px 12px;
+    border-radius: 20px; display: inline-block; margin-bottom: 18px; width: fit-content;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hai-plan:not(.featured) .hai-plan-badge { background: var(--hg-light); color: var(--hg); }
+  .hai-plan.featured .hai-plan-badge { background: rgba(255,255,255,.2); color: #fff; }
+  .hai-plan-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; color: #e8e5e0; }
+  .hai-plan.featured .hai-plan-name { color: #fff; }
+  .hai-plan-price { font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -2px; margin-bottom: 4px; color: #f0ede8; }
+  .hai-plan.featured .hai-plan-price { color: #fff; }
+  .hai-plan-price span { font-size: 15px; font-weight: 400; opacity: .5; }
+  .hai-plan-desc { font-size: 12px; color: #555; margin-bottom: 22px; font-family: 'DM Sans', sans-serif; }
+  .hai-plan.featured .hai-plan-desc { color: rgba(255,255,255,.6); }
+  .hai-plan-div { height: 1px; background: var(--hborder); margin-bottom: 18px; }
+  .hai-plan.featured .hai-plan-div { background: rgba(255,255,255,.2); }
+  .hai-plan-feat { display: flex; align-items: center; gap: 9px; font-size: 13px; margin-bottom: 9px; color: #888; font-family: 'DM Sans', sans-serif; }
+  .hai-plan-feat i { font-size: 14px; color: var(--hg); }
+  .hai-plan.featured .hai-plan-feat { color: rgba(255,255,255,.8); }
+  .hai-plan.featured .hai-plan-feat i { color: rgba(255,255,255,.9); }
+  .hai-plan-btn {
+    margin-top: auto; padding: 12px 0; border-radius: var(--hradius-pill);
+    font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    cursor: pointer; border: 1px solid var(--hborder-md); background: transparent;
+    color: #888; transition: all .2s;
+  }
+  .hai-plan-btn:hover { color: #f0ede8; border-color: rgba(255,255,255,.3); }
+  .hai-plan.featured .hai-plan-btn { background: #fff; color: var(--hg-mid); border-color: transparent; }
+  .hai-plan.featured .hai-plan-btn:hover { background: #e8f5f0; }
+
+  /* ── PRÉVIA DO APP ── */
+  .hai-trial-banner {
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, rgba(0,51,255,0.12) 0%, rgba(83,74,183,0.10) 100%);
+    border: 1px solid rgba(0,51,255,0.25); border-radius: var(--hradius);
+    padding: 14px 20px; margin-bottom: 28px;
+  }
+  .hai-trial-badge {
+    background: var(--hg); color: #fff; font-size: 10px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px; white-space: nowrap; letter-spacing: .5px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hai-trial-txt { font-size: 13px; color: #888; font-family: 'DM Sans', sans-serif; line-height: 1.4; }
+  .hai-trial-txt strong { color: #c0bdb8; }
+  .hai-trial-close {
+    margin-left: auto; background: none; border: none; color: #444;
+    cursor: pointer; font-size: 18px; padding: 0 4px; line-height: 1;
+    transition: color .2s;
+  }
+  .hai-trial-close:hover { color: #888; }
+
+  .hai-preview-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px; align-items: start;
+  }
+
+  /* App simulado */
+  .hai-app-window {
+    background: #0f0f0f; border-radius: 20px;
+    border: 1px solid var(--hborder);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .hai-aw-titlebar {
+    display: flex; align-items: center; gap: 8px;
+    background: #1a1a1a; padding: 12px 18px;
+    border-bottom: 1px solid var(--hborder);
+  }
+  .hai-aw-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .hai-aw-name {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+    color: #555; margin-left: 8px;
+  }
+  .hai-aw-live {
+    margin-left: auto; display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #1D9E75; font-family: 'DM Sans', sans-serif;
+  }
+
+  .hai-aw-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 500px;
+  }
+  .hai-aw-sidebar {
+    background: #111; border-right: 1px solid var(--hborder);
+    padding: 20px 0;
+  }
+  .hai-aw-sitem {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 18px; font-size: 13px; cursor: pointer;
+    color: #444; transition: all .15s; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-aw-sitem i { font-size: 16px; }
+  .hai-aw-sitem:hover { color: #888; background: rgba(255,255,255,.03); }
+  .hai-aw-sitem.on { color: #f0ede8; background: rgba(0,51,255,0.1); border-left: 2px solid var(--hg); }
+  .hai-aw-sitem.on i { color: var(--hg); }
+  /* Badge contador no sidebar */
+  .hai-aw-sitem-badge {
+    margin-left: auto; background: var(--hcoral); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 20px;
+  }
+
+  .hai-aw-content { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+
+  .hai-aw-cheader {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hai-aw-ctitle {
+    font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: #f0ede8;
+  }
+  .hai-aw-csub { font-size: 12px; color: #444; margin-top: 2px; font-family: 'DM Sans', sans-serif; }
+
+  .hai-aw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hai-aw-card {
+    background: #161616; border: 1px solid var(--hborder); border-radius: 14px;
+    padding: 16px; transition: border-color .2s;
+  }
+  .hai-aw-card:hover { border-color: var(--hborder-md); }
+  .hai-aw-card-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #444; margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
+  .hai-aw-card-val { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: #f0ede8; }
+  .hai-aw-card-sub { font-size: 11px; color: #555; margin-top: 3px; font-family: 'DM Sans', sans-serif; }
+
+  .hai-aw-chat {
+    background: #0a0a0a; border: 1px solid var(--hborder); border-radius: 14px;
+    padding: 16px; display: flex; flex-direction: column; gap: 12px;
+    flex: 1;
+  }
+  .hai-aw-chat-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 10px; border-bottom: 1px solid var(--hborder);
+  }
+  .hai-aw-chat-lbl { font-size: 11px; color: #555; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+  .hai-aw-chat-lang {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #666; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-aw-chat-msgs { display: flex; flex-direction: column; gap: 10px; min-height: 140px; }
+
+  .hai-aw-msg { display: flex; flex-direction: column; max-width: 75%; }
+  .hai-aw-msg.out { align-self: flex-end; align-items: flex-end; }
+  .hai-aw-msg.in { align-self: flex-start; }
+  .hai-aw-msg-bubble {
+    border-radius: 14px; padding: 10px 14px;
+    font-size: 13px; line-height: 1.45; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-aw-msg.out .hai-aw-msg-bubble { background: var(--hg); color: #fff; border-bottom-right-radius: 4px; }
+  .hai-aw-msg.in .hai-aw-msg-bubble { background: #1a1a1a; color: #d0cdc8; border: 1px solid var(--hborder); border-bottom-left-radius: 4px; }
+  .hai-aw-msg-tr { font-size: 11px; color: #444; font-style: italic; margin-top: 3px; font-family: 'DM Sans', sans-serif; }
+  .hai-aw-msg-who { font-size: 10px; color: #333; margin-top: 3px; font-family: 'DM Sans', sans-serif; }
+  .hai-aw-msg.out .hai-aw-msg-who { color: #444; text-align: right; }
+  /* Ações rápidas na mensagem */
+  .hai-aw-msg-actions {
+    display: flex; gap: 6px; margin-top: 4px; opacity: 0; transition: opacity .2s;
+  }
+  .hai-aw-msg:hover .hai-aw-msg-actions { opacity: 1; }
+  .hai-aw-msg-action-btn {
+    background: #1a1a1a; border: 1px solid var(--hborder); border-radius: 6px;
+    padding: 3px 8px; font-size: 10px; color: #555; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all .15s;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .hai-aw-msg-action-btn:hover { color: #f0ede8; border-color: var(--hborder-md); }
+
+  .hai-aw-input-row {
+    display: flex; align-items: center; gap: 8px;
+    background: #111; border: 1px solid var(--hborder); border-radius: 12px; padding: 8px 12px;
+    transition: border-color .2s;
+  }
+  .hai-aw-input-row:focus-within { border-color: rgba(0,51,255,0.4); }
+  .hai-aw-input {
+    flex: 1; background: none; border: none; outline: none;
+    font-size: 13px; color: #c0bdb8; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-aw-input::placeholder { color: #333; }
+  .hai-aw-send {
+    background: var(--hg); color: #fff; border: none; border-radius: 8px;
+    padding: 7px 14px; font-size: 12px; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; cursor: pointer; transition: opacity .2s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .hai-aw-send:hover { opacity: .85; }
+  .hai-aw-mic-btn {
+    background: rgba(0,51,255,0.1); color: var(--hg); border: 1px solid rgba(0,51,255,0.2);
+    border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 14px;
+    transition: all .2s; display: flex; align-items: center;
+  }
+  .hai-aw-mic-btn:hover { background: rgba(0,51,255,0.2); }
+  .hai-aw-mic-btn.listening { background: rgba(216,90,48,0.15); color: var(--hcoral); border-color: rgba(216,90,48,0.3); animation: haiPulse 1s infinite; }
+
+  .hai-preview-sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+  .hai-ps-card {
+    background: var(--hcard2); border: 1px solid var(--hborder);
+    border-radius: var(--hradius); padding: 20px;
+  }
+  .hai-ps-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #e8e5e0; margin-bottom: 14px; }
+
+  .hai-ps-lang-pair { display: flex; align-items: center; gap: 8px; }
+  .hai-ps-sel {
+    flex: 1; background: #111; border: 1px solid var(--hborder); border-radius: 10px;
+    color: #c0bdb8; font-size: 13px; font-family: 'DM Sans', sans-serif;
+    padding: 9px 12px; cursor: pointer; outline: none;
+    transition: border-color .2s; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+    padding-right: 28px;
+  }
+  .hai-ps-sel:focus { border-color: rgba(0,51,255,0.4); }
+  .hai-ps-swap-btn {
+    background: #1a1a1a; border: 1px solid var(--hborder); border-radius: 8px;
+    padding: 9px; color: #555; cursor: pointer; transition: all .25s;
+    font-size: 14px; display: flex; align-items: center;
+  }
+  .hai-ps-swap-btn:hover { color: #f0ede8; transform: rotate(180deg); }
+
+  .hai-ps-toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid var(--hborder);
+  }
+  .hai-ps-toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .hai-ps-toggle-info { flex: 1; }
+  .hai-ps-toggle-name { font-size: 13px; color: #c0bdb8; font-family: 'DM Sans', sans-serif; }
+  .hai-ps-toggle-desc { font-size: 11px; color: #444; font-family: 'DM Sans', sans-serif; margin-top: 1px; }
+  .hai-ps-switch {
+    position: relative; width: 36px; height: 20px; flex-shrink: 0;
+  }
+  .hai-ps-switch input { opacity: 0; width: 0; height: 0; }
+  .hai-ps-slider {
+    position: absolute; inset: 0; background: #222; border-radius: 20px;
+    cursor: pointer; transition: background .2s;
+    border: 1px solid var(--hborder);
+  }
+  .hai-ps-slider::before {
+    content: ''; position: absolute; width: 14px; height: 14px;
+    left: 3px; top: 2px; background: #555;
+    border-radius: 50%; transition: transform .2s, background .2s;
+  }
+  .hai-ps-switch input:checked + .hai-ps-slider { background: rgba(0,51,255,0.3); border-color: rgba(0,51,255,0.4); }
+  .hai-ps-switch input:checked + .hai-ps-slider::before { transform: translateX(16px); background: var(--hg); }
+
+  .hai-ps-slider-row { display: flex; flex-direction: column; gap: 8px; }
+  .hai-ps-slider-label { display: flex; justify-content: space-between; font-size: 12px; color: #555; font-family: 'DM Sans', sans-serif; }
+  .hai-ps-range {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 4px; border-radius: 2px;
+    background: #222; outline: none; cursor: pointer;
+  }
+  .hai-ps-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--hg); cursor: pointer;
+    border: 2px solid #080808;
+  }
+  .hai-ps-range::-moz-range-thumb {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--hg); cursor: pointer; border: 2px solid #080808;
+  }
+
+  .hai-ps-device {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(83,74,183,0.1); border: 1px solid rgba(83,74,183,0.2);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 14px;
+  }
+  .hai-ps-dev-ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(127,119,221,0.15); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .hai-ps-dev-ico i { color: var(--hp); font-size: 18px; }
+  .hai-ps-dev-name { font-size: 13px; font-weight: 500; color: #e8e5e0; font-family: 'DM Sans', sans-serif; }
+  .hai-ps-dev-status { font-size: 11px; color: #7f77dd; font-family: 'DM Sans', sans-serif; }
+
+  .hai-ps-batt-bar { height: 4px; background: #1a1a1a; border-radius: 2px; overflow: hidden; margin-top: 8px; }
+  .hai-ps-batt-fill { height: 100%; background: linear-gradient(90deg, var(--hg), var(--hp)); border-radius: 2px; width: 82%; transition: width .5s; }
+
+  .hai-lang-detect-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(0,51,255,0.10); border: 1px solid rgba(0,51,255,0.25);
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 11px; font-family: 'DM Sans', sans-serif;
+    color: #7f99ff; animation: haiFadeIn .25s ease;
+    transition: opacity .3s;
+  }
+  .hai-lang-detect-badge .hai-ld-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #0033ff; animation: haiPulse 1.2s infinite;
+    flex-shrink: 0;
+  }
+  .hai-lang-detect-badge strong { color: #c0ccff; font-weight: 600; }
+
+  .hai-translate-preview {
+    background: rgba(0,51,255,0.06);
+    border: 1px solid rgba(0,51,255,0.18);
+    border-radius: 12px; padding: 10px 14px;
+    display: none; animation: haiFadeIn .2s ease;
+    margin-top: 6px;
+  }
+  .hai-tp-label {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 1px;
+    color: #0033ff; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .hai-tp-label i { font-size: 11px; }
+  .hai-tp-text {
+    font-size: 13px; color: #c0bdb8; font-family: 'DM Sans', sans-serif;
+    font-style: italic; line-height: 1.4;
+  }
+  .hai-tp-target {
+    font-size: 10px; color: #444; font-family: 'DM Sans', sans-serif;
+    margin-top: 4px;
+  }
+
+  .hai-aw-msg-lang-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; color: #555; font-family: 'DM Sans', sans-serif;
+    margin-top: 4px; padding: 2px 8px;
+    background: rgba(255,255,255,0.04); border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .hai-aw-msg-lang-badge i { font-size: 10px; color: #7f77dd; }
+
+  .hai-toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a; border: 1px solid var(--hborder-md);
+    border-radius: var(--hradius-pill); padding: 12px 24px;
+    font-size: 13px; color: #c0bdb8; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s, transform .3s;
+    z-index: 9999;
+  }
+  .hai-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .hai-toast i { color: var(--hg); }
+
+  .hai-aw-translating {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: #0033ff; font-family: 'DM Sans', sans-serif;
+    padding: 6px 12px; background: rgba(0,51,255,0.07);
+    border-radius: 8px; border: 1px solid rgba(0,51,255,0.15);
+    animation: haiFadeIn .3s ease;
+  }
+  .hai-aw-translating .hai-w { background: var(--hg); }
+
+  /* ══════════════════════════════════════════════════
+     ── MODOS INTELIGENTES ──
+  ══════════════════════════════════════════════════ */
+  .hai-modes-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    margin-bottom: 16px;
+  }
+  .hai-mode-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; border-radius: 12px; cursor: pointer;
+    border: 1px solid var(--hborder); background: #111;
+    transition: all .2s; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-mode-btn:hover { border-color: var(--hborder-md); transform: translateY(-1px); }
+  .hai-mode-btn.active-mode { border-color: var(--hg); background: rgba(0,51,255,0.1); }
+  .hai-mode-ico {
+    width: 32px; height: 32px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hai-mode-ico i { font-size: 16px; }
+  .hai-mode-name { font-size: 12px; font-weight: 600; color: #c0bdb8; }
+  .hai-mode-desc { font-size: 10px; color: #444; margin-top: 1px; }
+  .hai-mode-btn.active-mode .hai-mode-name { color: #fff; }
+  .hai-mode-btn.active-mode .hai-mode-desc { color: rgba(0,51,255,0.8); }
+
+  /* Detectar ambiente */
+  .hai-env-detect {
+    background: #0a0a0a; border: 1px solid var(--hborder); border-radius: 12px;
+    padding: 14px; margin-bottom: 10px;
+  }
+  .hai-env-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+  }
+  .hai-env-title { font-size: 12px; color: #555; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+  .hai-env-scan-btn {
+    background: rgba(0,51,255,0.1); border: 1px solid rgba(0,51,255,0.2);
+    border-radius: 8px; padding: 5px 10px; font-size: 11px;
+    color: var(--hg); cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all .2s; display: flex; align-items: center; gap: 4px;
+  }
+  .hai-env-scan-btn:hover { background: rgba(0,51,255,0.2); }
+  .hai-env-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hai-env-chip {
+    display: flex; align-items: center; gap: 5px;
+    background: #161616; border: 1px solid var(--hborder);
+    border-radius: 20px; padding: 5px 10px;
+    font-size: 11px; color: #555; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all .2s;
+  }
+  .hai-env-chip:hover { color: #888; border-color: var(--hborder-md); }
+  .hai-env-chip.detected { background: rgba(29,158,117,0.1); border-color: rgba(29,158,117,0.3); color: #1D9E75; }
+  .hai-env-chip i { font-size: 12px; }
+
+  /* Perfil na nuvem */
+  .hai-cloud-row {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(83,74,183,0.08); border: 1px solid rgba(83,74,183,0.2);
+    border-radius: 10px; padding: 10px 14px;
+  }
+  .hai-cloud-ico { font-size: 18px; color: var(--hp); }
+  .hai-cloud-info { flex: 1; }
+  .hai-cloud-name { font-size: 12px; color: #c0bdb8; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  .hai-cloud-sub { font-size: 10px; color: #555; font-family: 'DM Sans', sans-serif; }
+  .hai-cloud-sync-btn {
+    background: none; border: 1px solid rgba(83,74,183,0.3); border-radius: 8px;
+    padding: 5px 10px; font-size: 11px; color: var(--hp); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all .2s;
+  }
+  .hai-cloud-sync-btn:hover { background: rgba(83,74,183,0.15); }
+
+  /* ══════════════════════════════════════════════════
+     ── SEGURANÇA ──
+  ══════════════════════════════════════════════════ */
+  .hai-sos-btn {
+    width: 100%; padding: 16px; border-radius: 14px;
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    border: 2px solid #e74c3c; color: #fff; cursor: pointer;
+    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all .2s; letter-spacing: .5px;
+    box-shadow: 0 0 30px rgba(231,76,60,0.3);
+  }
+  .hai-sos-btn:hover { box-shadow: 0 0 50px rgba(231,76,60,0.5); transform: scale(1.02); }
+  .hai-sos-btn.triggered { animation: haiSOSPulse 0.5s ease infinite; }
+  @keyframes haiSOSPulse {
+    0%,100% { box-shadow: 0 0 30px rgba(231,76,60,0.4); }
+    50% { box-shadow: 0 0 60px rgba(231,76,60,0.9); transform: scale(1.03); }
+  }
+  .hai-sos-hint { font-size: 10px; color: #444; text-align: center; margin-top: 6px; font-family: 'DM Sans', sans-serif; }
+
+  .hai-sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .hai-sec-card {
+    background: #111; border: 1px solid var(--hborder); border-radius: 12px;
+    padding: 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+    transition: all .2s;
+  }
+  .hai-sec-card:hover { border-color: var(--hborder-md); transform: translateY(-2px); }
+  .hai-sec-card-ico {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hai-sec-card-ico i { font-size: 17px; }
+  .hai-sec-card-name { font-size: 12px; font-weight: 600; color: #c0bdb8; font-family: 'DM Sans', sans-serif; }
+  .hai-sec-card-status { font-size: 10px; color: #444; font-family: 'DM Sans', sans-serif; }
+  .hai-sec-card.active-sec { border-color: rgba(231,76,60,0.4); background: rgba(231,76,60,0.06); }
+  .hai-sec-card.active-sec .hai-sec-card-name { color: #e74c3c; }
+
+  /* alerta de som perigoso */
+  .hai-danger-alert {
+    display: none; align-items: center; gap: 10px;
+    background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 10px; padding: 10px 14px; margin-top: 8px;
+    animation: haiFadeIn .3s ease;
+  }
+  .hai-danger-alert.show { display: flex; }
+  .hai-danger-dot { width: 8px; height: 8px; border-radius: 50%; background: #e74c3c; animation: haiPulse 0.8s infinite; flex-shrink: 0; }
+  .hai-danger-txt { font-size: 11px; color: #e74c3c; font-family: 'DM Sans', sans-serif; }
+  .hai-danger-dismiss { margin-left: auto; background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 14px; }
+
+  /* mapa de localização simulado */
+  .hai-loc-map {
+    background: #0d1117; border: 1px solid var(--hborder); border-radius: 12px;
+    height: 120px; position: relative; overflow: hidden; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hai-loc-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,51,255,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,51,255,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .hai-loc-pin {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    display: flex; flex-direction: column; align-items: center;
+    animation: haiFadeIn .5s ease;
+  }
+  .hai-loc-dot-outer {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,51,255,0.15); display: flex; align-items: center; justify-content: center;
+    animation: haiPulse 2s infinite;
+  }
+  .hai-loc-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--hg); }
+  .hai-loc-label {
+    font-size: 10px; color: var(--hg); font-family: 'DM Sans', sans-serif;
+    margin-top: 4px; background: rgba(0,0,0,0.8); padding: 2px 8px; border-radius: 10px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── HISTÓRICO EXPANDIDO ──
+  ══════════════════════════════════════════════════ */
+  .hai-hist-filters {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .hai-hist-filter {
+    padding: 5px 12px; border-radius: 20px; border: 1px solid var(--hborder);
+    background: transparent; color: #555; font-size: 11px;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all .2s;
+  }
+  .hai-hist-filter:hover { color: #888; }
+  .hai-hist-filter.on { background: rgba(0,51,255,0.1); border-color: rgba(0,51,255,0.3); color: var(--hg); }
+
+  .hai-hist-search {
+    display: flex; align-items: center; gap: 8px;
+    background: #111; border: 1px solid var(--hborder); border-radius: 10px;
+    padding: 8px 12px; margin-bottom: 14px; transition: border-color .2s;
+  }
+  .hai-hist-search:focus-within { border-color: rgba(0,51,255,0.4); }
+  .hai-hist-search i { color: #444; font-size: 14px; }
+  .hai-hist-search input {
+    flex: 1; background: none; border: none; outline: none;
+    font-size: 12px; color: #c0bdb8; font-family: 'DM Sans', sans-serif;
+  }
+  .hai-hist-search input::placeholder { color: #333; }
+
+  .hai-hist-card {
+    display: flex; align-items: center; gap: 14px; cursor: pointer;
+    transition: all .2s;
+  }
+  .hai-hist-card:hover { transform: translateX(3px); }
+  .hai-hist-stars { display: flex; gap: 2px; margin-top: 4px; }
+  .hai-hist-star { font-size: 10px; color: #333; cursor: pointer; transition: color .1s; }
+  .hai-hist-star.filled { color: #f0b429; }
+  .hai-hist-actions {
+    display: flex; gap: 6px; margin-left: auto;
+  }
+  .hai-hist-action {
+    background: #111; border: 1px solid var(--hborder); border-radius: 6px;
+    padding: 5px 8px; color: #444; cursor: pointer; font-size: 12px;
+    transition: all .15s;
+  }
+  .hai-hist-action:hover { color: #888; border-color: var(--hborder-md); }
+  .hai-hist-detail {
+    display: none; padding: 14px; border-radius: 12px;
+    background: #0a0a0a; border: 1px solid var(--hborder); margin-top: 8px;
+  }
+  .hai-hist-detail.show { display: block; animation: haiFadeIn .2s ease; }
+  .hai-hist-detail-msg {
+    font-size: 11px; color: #666; font-family: 'DM Sans', sans-serif;
+    border-left: 2px solid var(--hborder); padding-left: 10px; margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── ALARMES EXPANDIDOS ──
+  ══════════════════════════════════════════════════ */
+  .hai-alarm-full {
+    display: flex; flex-direction: column; gap: 10px;
+    background: #161616; border: 1px solid var(--hborder); border-radius: 14px;
+    padding: 16px; margin-bottom: 14px;
+  }
+  .hai-alarm-time-display {
+    font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; color: #f0ede8;
+  }
+  .hai-alarm-repeat-row {
+    display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px;
+  }
+  .hai-alarm-day {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--hborder);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #444; cursor: pointer; transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hai-alarm-day:hover { color: #888; }
+  .hai-alarm-day.on { background: var(--hg); color: #fff; border-color: var(--hg); }
+  .hai-alarm-type-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .hai-alarm-type-chip {
+    padding: 4px 10px; border-radius: 20px; border: 1px solid var(--hborder);
+    font-size: 11px; color: #555; cursor: pointer; transition: all .15s;
+    font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 4px;
+  }
+  .hai-alarm-type-chip:hover { color: #888; }
+  .hai-alarm-type-chip.on { background: rgba(0,51,255,0.1); border-color: rgba(0,51,255,0.3); color: var(--hg); }
+  .hai-alarm-label-input {
+    background: #0a0a0a; border: 1px solid var(--hborder); border-radius: 8px;
+    padding: 7px 12px; color: #c0bdb8; font-size: 12px;
+    font-family: 'DM Sans', sans-serif; outline: none; width: 100%;
+    transition: border-color .2s;
+  }
+  .hai-alarm-label-input:focus { border-color: rgba(0,51,255,0.4); }
+  .hai-alarm-smart-row {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .hai-alarm-smart-name { font-size: 12px; color: #c0bdb8; font-family: 'DM Sans', sans-serif; }
+  .hai-alarm-smart-sub { font-size: 10px; color: #444; font-family: 'DM Sans', sans-serif; }
+
+  /* Modal de criação de alarme */
+  .hai-alarm-modal {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    z-index: 10000; align-items: center; justify-content: center;
+    animation: haiFadeIn .2s ease;
+  }
+  .hai-alarm-modal.show { display: flex; }
+  .hai-alarm-modal-box {
+    background: #111; border: 1px solid var(--hborder-md);
+    border-radius: 20px; padding: 28px; width: 360px;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .hai-alarm-modal-title {
+    font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
+    color: #f0ede8; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .hai-alarm-modal-close {
+    background: none; border: none; color: #444; cursor: pointer; font-size: 20px; transition: color .2s;
+  }
+  .hai-alarm-modal-close:hover { color: #888; }
+  .hai-alarm-time-picker {
+    display: flex; align-items: center; gap: 8px; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .hai-alarm-time-sel {
+    background: #0a0a0a; border: 1px solid var(--hborder); border-radius: 12px;
+    padding: 12px 16px; font-family: 'Syne', sans-serif;
+    font-size: 32px; font-weight: 700; color: #f0ede8; outline: none;
+    width: 90px; text-align: center;
+    -webkit-appearance: none; appearance: none;
+  }
+  .hai-alarm-time-colon { font-size: 32px; color: #555; font-family: 'Syne', sans-serif; font-weight: 700; }
+  .hai-modal-section-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #444; font-family: 'DM Sans', sans-serif; margin-bottom: 8px; }
+
+  /* ══════════════════════════════════════════════════
+     ── TELA MODOS INTELIGENTES ──
+  ══════════════════════════════════════════════════ */
+  .hai-smart-mode-active {
+    display: flex; align-items: center; gap: 12px;
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 14px;
+    transition: all .3s;
+  }
+  .hai-sma-ico {
+    width: 44px; height: 44px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hai-sma-ico i { font-size: 22px; }
+  .hai-sma-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #f0ede8; }
+  .hai-sma-desc { font-size: 11px; color: #666; font-family: 'DM Sans', sans-serif; margin-top: 2px; }
+  .hai-sma-status {
+    margin-left: auto; padding: 4px 10px; border-radius: 20px;
+    font-size: 10px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+  }
+
+  /* EQ Visualizer */
+  .hai-eq-bars {
+    display: flex; align-items: flex-end; gap: 4px; height: 60px;
+    background: #0a0a0a; border-radius: 10px; padding: 10px 12px;
+    border: 1px solid var(--hborder);
+  }
+  .hai-eq-bar {
+    flex: 1; border-radius: 3px; background: var(--hg);
+    cursor: pointer; transition: height .3s ease, background .2s;
+    position: relative;
+  }
+  .hai-eq-bar:hover { background: var(--hp); }
+  .hai-eq-labels {
+    display: flex; gap: 4px; padding: 4px 12px;
+  }
+  .hai-eq-label { flex: 1; text-align: center; font-size: 9px; color: #444; font-family: 'DM Sans', sans-serif; }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .hai-preview-layout { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 860px) {
+    .hai-section { padding: 60px 20px; }
+    .hai-proto-layout { grid-template-columns: 1fr; }
+    .hai-phone { width: 100%; max-width: 300px; margin: 0 auto; }
+    .hai-features-grid { grid-template-columns: 1fr 1fr; }
+    .hai-pricing-grid { grid-template-columns: 1fr; }
+    .hai-aw-body { grid-template-columns: 1fr; }
+    .hai-aw-sidebar { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hai-features-grid { grid-template-columns: 1fr; }
+    .hai-tab-bar { width: 100%; overflow-x: auto; }
+    .hai-aw-grid { grid-template-columns: 1fr; }
+    .hai-modes-grid { grid-template-columns: 1fr; }
+    .hai-sec-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- ── HEARAI: EXPLORE O PRODUTO ── -->
+<section class="hai-section" id="hearai-explore">
+  <div class="hai-inner">
+
+    <div class="hai-label">Explore o produto</div>
+    <div class="hai-title">Veja tudo que o <em>NexoApp</em> oferece</div>
+
+    <!-- Tab bar -->
+    <div class="hai-tab-bar">
+      <button class="hai-tab-btn active" onclick="haiTab('app',this)">
+        <i class="ti ti-device-mobile"></i>Protótipo do App
+      </button>
+      <button class="hai-tab-btn" onclick="haiTab('features',this)">
+        <i class="ti ti-sparkles"></i>Funcionalidades
+      </button>
+      <button class="hai-tab-btn" onclick="haiTab('preview',this)">
+        <i class="ti ti-player-play"></i>Prévia do App
+      </button>
+    </div>
+
+    <!-- ── PANEL: APP (protótipo) ── -->
+    <div class="hai-panel active" id="hai-tab-app">
+      <div class="hai-proto-layout">
+        <div class="hai-phone">
+          <div class="hai-phone-notch"></div>
+          <div class="hai-phone-btn"></div>
+          <div class="hai-phone-screen">
+            <div class="hai-app-status">
+              <span id="hai-clock">9:41</span>
+              <div style="display:flex;gap:5px;align-items:center;">
+                <i class="ti ti-wifi" style="font-size:13px;"></i>
+                <i class="ti ti-battery-3" style="font-size:13px;"></i>
+              </div>
+            </div>
+            <div class="hai-app-header">
+              <div class="hai-app-hrow">
+                <div class="hai-app-logorow">
+                  <div class="hai-app-sq"><i class="ti ti-ear"></i></div>
+                  <span class="hai-app-name">Nexo</span>
+                </div>
+                <div class="hai-live-badge"><div class="hai-live-dot"></div>Ao vivo</div>
+              </div>
+              <div class="hai-lang-row">
+                <div class="hai-lang-chip">🇩🇪 Alemão</div>
+                <div class="hai-swap" onclick="haiSwapLangs()"><i class="ti ti-arrows-exchange"></i></div>
+                <div class="hai-lang-chip">🇧🇷 Português</div>
+              </div>
+            </div>
+            <div class="hai-dev-bar">
+              <div class="hai-dev-left">
+                <div class="hai-dev-dot"></div>
+                <div>
+                  <div class="hai-dev-name">Nexo Pro · Ouvido Direito</div>
+                  <div class="hai-dev-sub">Conectado · Latência <span id="hai-latency-proto">18ms</span></div>
+                </div>
+              </div>
+              <div class="hai-batt"><i class="ti ti-battery-3" style="font-size:14px;"></i> 82%</div>
+            </div>
+            <div class="hai-convo" id="hai-convo">
+              <div class="hai-convo-lbl">Conversa em tempo real</div>
+              <div class="hai-bubble hai-b-in">
+                <div class="hai-b-text">Können Sie mir bitte den Weg zum Bahnhof erklären?</div>
+                <div class="hai-b-tag">↓ traduzido automaticamente</div>
+                <div class="hai-b-tr">"Você pode me explicar o caminho para a estação?"</div>
+                <div class="hai-b-meta">Hans · há 1 min</div>
+              </div>
+              <div class="hai-bubble hai-b-out">
+                <div class="hai-b-text">Claro! Dois quarteirões em frente e vire à esquerda.</div>
+                <div class="hai-b-meta">Você · 30s atrás</div>
+              </div>
+              <div class="hai-bubble hai-b-in">
+                <div class="hai-b-text">Vielen Dank! Das ist sehr nett von Ihnen.</div>
+                <div class="hai-b-tag">↓ traduzido automaticamente</div>
+                <div class="hai-b-tr">"Muito obrigado! Isso é muito gentil da sua parte."</div>
+                <div class="hai-b-meta">Hans · agora</div>
+              </div>
+              <div class="hai-listen" id="hai-listen-bar">
+                <div class="hai-waves">
+                  <div class="hai-w"></div><div class="hai-w"></div><div class="hai-w"></div>
+                  <div class="hai-w"></div><div class="hai-w"></div><div class="hai-w"></div>
+                </div>
+                <span class="hai-listen-lbl">Ouvindo e traduzindo…</span>
+              </div>
+            </div>
+            <div class="hai-app-nav">
+              <div class="hai-anav on"><i class="ti ti-message-circle"></i><span>Conversa</span></div>
+              <div class="hai-anav"><i class="ti ti-history"></i><span>Histórico</span></div>
+              <div class="hai-anav"><i class="ti ti-settings"></i><span>Config.</span></div>
+              <div class="hai-anav"><i class="ti ti-user"></i><span>Perfil</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hai-proto-right">
+          <div>
+            <div class="hai-proto-ttl">Protótipo interativo</div>
+            <div class="hai-proto-desc">Um aparelho auditivo inteligente capaz de traduzir conversas em tempo real utilizando Inteligência Artificial. Comunicação sem fronteiras, direto no seu ouvido.</div>
+          </div>
+          <div class="hai-stats">
+            <div class="hai-stat">
+              <div class="hai-stat-n" style="color:#1D9E75;">20ms</div>
+              <div class="hai-stat-l">Latência de tradução</div>
+            </div>
+            <div class="hai-stat">
+              <div class="hai-stat-n" style="color:#7f77dd;">70+</div>
+              <div class="hai-stat-l">Idiomas suportados</div>
+            </div>
+            <div class="hai-stat">
+              <div class="hai-stat-n" style="color:#e8e5e0;">98%</div>
+              <div class="hai-stat-l">Precisão de fala</div>
+            </div>
+            <div class="hai-stat">
+              <div class="hai-stat-n" style="color:#D85A30;">82%</div>
+              <div class="hai-stat-l">Bateria do dispositivo</div>
+            </div>
+          </div>
+          <div class="hai-feats">
+            <div class="hai-feat-row">
+              <div class="hai-feat-ico" style="background:rgba(29,158,117,0.12);">
+                <i class="ti ti-brain" style="color:#1D9E75;"></i>
+              </div>
+              <div>
+                <div class="hai-feat-name">IA adaptativa</div>
+                <div class="hai-feat-desc">Aprende seu sotaque e vocabulário ao longo do tempo para traduções cada vez mais naturais.</div>
+              </div>
+            </div>
+            <div class="hai-feat-row">
+              <div class="hai-feat-ico" style="background:rgba(83,74,183,0.12);">
+                <i class="ti ti-shield-lock" style="color:#7f77dd;"></i>
+              </div>
+              <div>
+                <div class="hai-feat-name">Privacidade total</div>
+                <div class="hai-feat-desc">Processamento no próprio dispositivo. Nenhuma conversa é enviada para servidores externos.</div>
+              </div>
+            </div>
+            <div class="hai-feat-row">
+              <div class="hai-feat-ico" style="background:rgba(216,90,48,0.1);">
+                <i class="ti ti-volume" style="color:#D85A30;"></i>
+              </div>
+              <div>
+                <div class="hai-feat-name">Modo surround</div>
+                <div class="hai-feat-desc">Isola vozes em ambientes ruidosos e foca apenas no interlocutor principal.</div>
+              </div>
+            </div>
+          </div>
+          <div class="hai-cta">
+            <button class="hai-btn-g" onclick="haiShowToast('✓ Solicitação enviada! Entraremos em contato.')">Solicitar acesso antecipado</button>
+            <button class="hai-btn-ghost" onclick="haiShowToast('Abrindo documentação…')">Ver documentação</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL: FEATURES ── -->
+    <div class="hai-panel" id="hai-tab-features">
+      <div class="hai-features-grid">
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(29,158,117,0.12);">
+            <i class="ti ti-language" style="color:#0033ff;"></i>
+          </div>
+          <div class="hai-fg-title">70+ idiomas</div>
+          <div class="hai-fg-desc">Suporte a mais de 70 idiomas e dialetos, com novos sendo adicionados via atualizações automáticas de firmware.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(24,95,165,0.12);">
+            <i class="ti ti-bolt" style="color:#378ADD;"></i>
+          </div>
+          <div class="hai-fg-title">Latência de 20ms</div>
+          <div class="hai-fg-desc">Tradução quase instantânea que se encaixa no ritmo natural de uma conversa — sem pausas, sem espera.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(83,74,183,0.12);">
+            <i class="ti ti-brain" style="color:#7f77dd;"></i>
+          </div>
+          <div class="hai-fg-title">IA personalizada</div>
+          <div class="hai-fg-desc">O modelo aprende com seu perfil de voz, contexto e vocabulário para entregas cada vez mais precisas.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(216,90,48,0.1);">
+            <i class="ti ti-ear" style="color:#D85A30;"></i>
+          </div>
+          <div class="hai-fg-title">Isolamento de voz</div>
+          <div class="hai-fg-desc">Beamforming de duplo microfone isola o interlocutor principal mesmo em cafés, aeroportos ou shows.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(231,76,60,0.12);">
+            <i class="ti ti-alert-triangle" style="color:#e74c3c;"></i>
+          </div>
+          <div class="hai-fg-title">Segurança inteligente</div>
+          <div class="hai-fg-desc">SOS por voz, detecção de quedas, alerta de sons perigosos e compartilhamento de localização em emergências.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(240,180,41,0.1);">
+            <i class="ti ti-adjustments" style="color:#f0b429;"></i>
+          </div>
+          <div class="hai-fg-title">Modos inteligentes</div>
+          <div class="hai-fg-desc">Modo Aula, Rua, Trabalho e Música com equalização e detecção automática de ambiente em tempo real.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(29,158,117,0.12);">
+            <i class="ti ti-cloud" style="color:#1D9E75;"></i>
+          </div>
+          <div class="hai-fg-title">Perfil na nuvem</div>
+          <div class="hai-fg-desc">Configurações, modos e preferências sincronizadas automaticamente entre todos os seus dispositivos Nexo.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(59,109,17,0.12);">
+            <i class="ti ti-bell" style="color:#639922;"></i>
+          </div>
+          <div class="hai-fg-title">Alarmes inteligentes</div>
+          <div class="hai-fg-desc">Alarmes com vibração háptica, tons personalizados, repetição por dias da semana e despertar gradual.</div>
+        </div>
+        <div class="hai-fg-card">
+          <div class="hai-fg-ico" style="background:rgba(83,74,183,0.12);">
+            <i class="ti ti-history" style="color:#7f77dd;"></i>
+          </div>
+          <div class="hai-fg-title">Histórico completo</div>
+          <div class="hai-fg-desc">Acesse, pesquise, filtre e exporte todas as suas conversas traduzidas com marcação por idioma e favoritos.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL: PRÉVIA DO APP ── -->
+    <div class="hai-panel" id="hai-tab-preview">
+
+      <div class="hai-trial-banner" id="haiTrialBanner">
+        <span class="hai-trial-badge">MODO PRÉVIA</span>
+        <span class="hai-trial-txt">Você está testando uma versão demonstrativa do NexoApp. <strong>Todas as funções são simuladas</strong> — a tradução real requer o dispositivo físico Nexo conectado.</span>
+        <button class="hai-trial-close" onclick="document.getElementById('haiTrialBanner').style.display='none'">×</button>
+      </div>
+
+      <div class="hai-preview-layout">
+
+        <!-- Janela do App -->
+        <div class="hai-app-window">
+          <div class="hai-aw-titlebar">
+            <div class="hai-aw-dot" style="background:#ff5f57;"></div>
+            <div class="hai-aw-dot" style="background:#febc2e;"></div>
+            <div class="hai-aw-dot" style="background:#28c840;"></div>
+            <span class="hai-aw-name">NexoApp — Modo Prévia</span>
+            <div class="hai-aw-live">
+              <div class="hai-live-dot" style="background:#1D9E75;"></div>
+              Simulação ativa
+            </div>
+          </div>
+
+          <div class="hai-aw-body">
+            <!-- Sidebar -->
+            <div class="hai-aw-sidebar">
+              <div class="hai-aw-sitem on" id="haiNav-translate" onclick="haiNavSwitch('translate',this)">
+                <i class="ti ti-language"></i> Tradutor
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-history" onclick="haiNavSwitch('history',this)">
+                <i class="ti ti-history"></i> Histórico
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-alarm" onclick="haiNavSwitch('alarm',this)">
+                <i class="ti ti-bell"></i> Alarme
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-modes" onclick="haiNavSwitch('modes',this)">
+                <i class="ti ti-adjustments"></i> Modos IA
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-security" onclick="haiNavSwitch('security',this)">
+                <i class="ti ti-shield"></i> Segurança
+                <span class="hai-aw-sitem-badge" id="haiSecBadge">!</span>
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-device" onclick="haiNavSwitch('device',this)">
+                <i class="ti ti-bluetooth"></i> Dispositivo
+              </div>
+              <div class="hai-aw-sitem" id="haiNav-settings" onclick="haiNavSwitch('settings',this)">
+                <i class="ti ti-settings"></i> Config.
+              </div>
+            </div>
+
+            <!-- Conteúdo dinâmico -->
+            <div class="hai-aw-content" id="haiAppContent">
+
+              <!-- ══ TELA: TRADUTOR ══ -->
+              <div id="haiScreen-translate">
+                <div class="hai-aw-cheader">
+                  <div>
+                    <div class="hai-aw-ctitle">Tradução em tempo real</div>
+                    <div class="hai-aw-csub">Digite ou simule uma fala para ver a tradução</div>
+                  </div>
+                  <div id="haiTransStatus" style="display:none;" class="hai-aw-translating">
+                    <div class="hai-waves" style="height:12px;">
+                      <div class="hai-w" style="height:4px;"></div>
+                      <div class="hai-w" style="height:8px;"></div>
+                      <div class="hai-w" style="height:10px;"></div>
+                      <div class="hai-w" style="height:6px;"></div>
+                    </div>
+                    Traduzindo…
+                  </div>
+                </div>
+                <div class="hai-aw-grid">
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Idioma de entrada</div>
+                    <div class="hai-aw-card-val" id="haiLangFrom">🇩🇪 Alemão</div>
+                    <div class="hai-aw-card-sub">Detectado automaticamente</div>
+                  </div>
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Idioma de saída</div>
+                    <div class="hai-aw-card-val" id="haiLangTo">🇧🇷 Português</div>
+                    <div class="hai-aw-card-sub">Áudio no dispositivo</div>
+                  </div>
+                </div>
+                <div class="hai-aw-chat">
+                  <div class="hai-aw-chat-top">
+                    <span class="hai-aw-chat-lbl">Conversa ativa</span>
+                    <span class="hai-aw-chat-lang" id="haiChatLangLabel">🇩🇪 → 🇧🇷</span>
+                  </div>
+                  <div id="haiDetectBadge" class="hai-lang-detect-badge" style="display:none;margin-bottom:6px;">
+                    <span class="hai-ld-dot"></span>
+                    Idioma detectado: <strong id="haiDetectLangName">Alemão</strong> <span id="haiDetectFlag">🇩🇪</span>
+                  </div>
+                  <div class="hai-aw-chat-msgs" id="haiChatMsgs">
+                    <div class="hai-aw-msg in">
+                      <div class="hai-aw-msg-bubble">Guten Morgen! Wie kann ich Ihnen helfen?</div>
+                      <div class="hai-aw-msg-tr">↓ "Bom dia! Como posso ajudá-lo?"</div>
+                      <div class="hai-aw-msg-lang-badge"><i class="ti ti-language"></i> Detectado: Alemão 🇩🇪</div>
+                      <div class="hai-aw-msg-who">Interlocutor · há 2 min</div>
+                      <div class="hai-aw-msg-actions">
+                        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem copiada!')"><i class="ti ti-copy"></i> Copiar</button>
+                        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Adicionado ao histórico!')"><i class="ti ti-bookmark"></i> Salvar</button>
+                      </div>
+                    </div>
+                    <div class="hai-aw-msg out">
+                      <div class="hai-aw-msg-bubble">Olá! Preciso de informações sobre o produto.</div>
+                      <div class="hai-aw-msg-tr" style="color:#8888ff;font-style:italic;font-size:11px;margin-top:3px;">→ traduzido para Alemão: "Ich brauche Produktinformationen."</div>
+                      <div class="hai-aw-msg-who">Você · há 1 min</div>
+                      <div class="hai-aw-msg-actions">
+                        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem copiada!')"><i class="ti ti-copy"></i> Copiar</button>
+                        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem editada!')"><i class="ti ti-edit"></i> Editar</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hai-aw-input-row">
+                    <input class="hai-aw-input" id="haiChatInput" placeholder="Digite sua mensagem em português…"
+                      onkeydown="if(event.key==='Enter')haiSendMsg()"
+                      oninput="haiPreviewTranslation(this.value)" />
+                    <button class="hai-aw-mic-btn" id="haiMicBtn" onclick="haiToggleMic()" title="Simular fala">
+                      <i class="ti ti-microphone"></i>
+                    </button>
+                    <button class="hai-aw-send" onclick="haiSendMsg()">
+                      <i class="ti ti-send" style="font-size:13px;"></i> Enviar
+                    </button>
+                  </div>
+                  <div class="hai-translate-preview" id="haiTransPreview">
+                    <div class="hai-tp-label"><i class="ti ti-arrows-exchange"></i> Sua mensagem será traduzida para:</div>
+                    <div class="hai-tp-text" id="haiTransPreviewText">…</div>
+                    <div class="hai-tp-target" id="haiTransPreviewTarget">— em <strong>Alemão</strong> · via Nexo</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ TELA: HISTÓRICO EXPANDIDO ══ -->
+              <div id="haiScreen-history" style="display:none;">
+                <div class="hai-aw-cheader" style="margin-bottom:14px;">
+                  <div>
+                    <div class="hai-aw-ctitle">Histórico de conversas</div>
+                    <div class="hai-aw-csub">Pesquise, filtre e exporte suas sessões</div>
+                  </div>
+                  <div style="display:flex;gap:6px;">
+                    <button class="hai-btn-ghost" style="padding:7px 12px;font-size:11px;" onclick="haiShowToast('📤 Exportando histórico como PDF…')"><i class="ti ti-download"></i> Exportar</button>
+                    <button class="hai-btn-g" style="padding:7px 12px;font-size:11px;" onclick="haiClearHistory()"><i class="ti ti-trash"></i> Limpar</button>
+                  </div>
+                </div>
+
+                <!-- Busca -->
+                <div class="hai-hist-search">
+                  <i class="ti ti-search"></i>
+                  <input id="haiHistSearch" placeholder="Buscar por nome, idioma ou conteúdo…" oninput="haiFilterHistory(this.value)"/>
+                  <i class="ti ti-x" style="color:#333;cursor:pointer;" onclick="document.getElementById('haiHistSearch').value='';haiFilterHistory('')"></i>
+                </div>
+
+                <!-- Filtros -->
+                <div class="hai-hist-filters">
+                  <button class="hai-hist-filter on" onclick="haiHistTab('all',this)">Todos</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('today',this)">Hoje</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('week',this)">Esta semana</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('fav',this)">⭐ Favoritos</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('de',this)">🇩🇪 Alemão</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('jp',this)">🇯🇵 Japonês</button>
+                  <button class="hai-hist-filter" onclick="haiHistTab('fr',this)">🇫🇷 Francês</button>
+                </div>
+
+                <!-- Estatísticas rápidas -->
+                <div class="hai-aw-grid" style="margin-bottom:14px;">
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Total de sessões</div>
+                    <div class="hai-aw-card-val" style="color:#7f77dd;" id="haiHistTotal">3</div>
+                    <div class="hai-aw-card-sub">este mês</div>
+                  </div>
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Palavras traduzidas</div>
+                    <div class="hai-aw-card-val" style="color:#1D9E75;">2.847</div>
+                    <div class="hai-aw-card-sub">acumulado</div>
+                  </div>
+                </div>
+
+                <!-- Lista de conversas -->
+                <div style="display:flex;flex-direction:column;gap:10px;" id="haiHistList">
+
+                  <div class="hai-aw-card hist-item hist-today hist-de" id="haiHistCard0" style="padding:14px;">
+                    <div class="hai-hist-card">
+                      <div style="width:40px;height:40px;border-radius:12px;background:rgba(0,51,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="ti ti-message-2" style="color:#0033ff;font-size:18px;"></i>
+                      </div>
+                      <div style="flex:1;">
+                        <div style="font-size:13px;color:#e8e5e0;font-family:'DM Sans',sans-serif;font-weight:500;">Hans Mueller · Alemão → Português</div>
+                        <div style="font-size:11px;color:#444;font-family:'DM Sans',sans-serif;margin-top:2px;">32 mensagens · 14 min · Hoje, 09:41</div>
+                        <div class="hai-hist-stars" id="haiStars0">
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(0,0)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(0,1)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(0,2)">★</span>
+                          <span class="hai-hist-star" onclick="haiToggleStar(0,3)">★</span>
+                          <span class="hai-hist-star" onclick="haiToggleStar(0,4)">★</span>
+                        </div>
+                      </div>
+                      <div class="hai-hist-actions">
+                        <button class="hai-hist-action" onclick="haiToggleHistDetail(0)" title="Ver detalhes"><i class="ti ti-chevron-down"></i></button>
+                        <button class="hai-hist-action" onclick="haiShowToast('📤 Sessão exportada!')" title="Exportar"><i class="ti ti-download"></i></button>
+                        <button class="hai-hist-action" onclick="haiDeleteHist(0)" title="Apagar" style="color:#c0392b;"><i class="ti ti-trash"></i></button>
+                      </div>
+                    </div>
+                    <div class="hai-hist-detail" id="haiHistDetail0">
+                      <div class="hai-aw-card-lbl" style="margin-bottom:8px;">Trecho da conversa</div>
+                      <div class="hai-hist-detail-msg">Hans: "Können Sie mir den Weg zeigen?" → "Pode me mostrar o caminho?"</div>
+                      <div class="hai-hist-detail-msg">Você: "Claro! É ali na segunda rua." → "Natürlich! Es ist in der zweiten Straße."</div>
+                      <div style="display:flex;gap:8px;margin-top:10px;">
+                        <button class="hai-btn-g" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('Continuando sessão…')">Continuar</button>
+                        <button class="hai-btn-ghost" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('📋 Transcrição copiada!')">Copiar tudo</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="hai-aw-card hist-item hist-today hist-jp" id="haiHistCard1" style="padding:14px;">
+                    <div class="hai-hist-card">
+                      <div style="width:40px;height:40px;border-radius:12px;background:rgba(216,90,48,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="ti ti-message-2" style="color:#D85A30;font-size:18px;"></i>
+                      </div>
+                      <div style="flex:1;">
+                        <div style="font-size:13px;color:#e8e5e0;font-family:'DM Sans',sans-serif;font-weight:500;">Yuki Tanaka · Japonês → Português</div>
+                        <div style="font-size:11px;color:#444;font-family:'DM Sans',sans-serif;margin-top:2px;">18 mensagens · 8 min · Ontem, 15:22</div>
+                        <div class="hai-hist-stars" id="haiStars1">
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(1,0)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(1,1)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(1,2)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(1,3)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(1,4)">★</span>
+                        </div>
+                      </div>
+                      <div class="hai-hist-actions">
+                        <button class="hai-hist-action" onclick="haiToggleHistDetail(1)"><i class="ti ti-chevron-down"></i></button>
+                        <button class="hai-hist-action" onclick="haiShowToast('📤 Sessão exportada!')"><i class="ti ti-download"></i></button>
+                        <button class="hai-hist-action" onclick="haiDeleteHist(1)" style="color:#c0392b;"><i class="ti ti-trash"></i></button>
+                      </div>
+                    </div>
+                    <div class="hai-hist-detail" id="haiHistDetail1">
+                      <div class="hai-aw-card-lbl" style="margin-bottom:8px;">Trecho da conversa</div>
+                      <div class="hai-hist-detail-msg">Yuki: "すみません、これはいくらですか？" → "Com licença, quanto é isso?"</div>
+                      <div class="hai-hist-detail-msg">Você: "Não sei, vou perguntar." → "わかりません、聞いてみます。"</div>
+                      <div style="display:flex;gap:8px;margin-top:10px;">
+                        <button class="hai-btn-g" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('Continuando sessão…')">Continuar</button>
+                        <button class="hai-btn-ghost" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('📋 Transcrição copiada!')">Copiar tudo</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="hai-aw-card hist-item hist-week hist-fr" id="haiHistCard2" style="padding:14px;">
+                    <div class="hai-hist-card">
+                      <div style="width:40px;height:40px;border-radius:12px;background:rgba(83,74,183,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="ti ti-message-2" style="color:#7f77dd;font-size:18px;"></i>
+                      </div>
+                      <div style="flex:1;">
+                        <div style="font-size:13px;color:#e8e5e0;font-family:'DM Sans',sans-serif;font-weight:500;">Sophie Dubois · Francês → Português</div>
+                        <div style="font-size:11px;color:#444;font-family:'DM Sans',sans-serif;margin-top:2px;">47 mensagens · 22 min · 18 mai</div>
+                        <div class="hai-hist-stars" id="haiStars2">
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(2,0)">★</span>
+                          <span class="hai-hist-star filled" onclick="haiToggleStar(2,1)">★</span>
+                          <span class="hai-hist-star" onclick="haiToggleStar(2,2)">★</span>
+                          <span class="hai-hist-star" onclick="haiToggleStar(2,3)">★</span>
+                          <span class="hai-hist-star" onclick="haiToggleStar(2,4)">★</span>
+                        </div>
+                      </div>
+                      <div class="hai-hist-actions">
+                        <button class="hai-hist-action" onclick="haiToggleHistDetail(2)"><i class="ti ti-chevron-down"></i></button>
+                        <button class="hai-hist-action" onclick="haiShowToast('📤 Sessão exportada!')"><i class="ti ti-download"></i></button>
+                        <button class="hai-hist-action" onclick="haiDeleteHist(2)" style="color:#c0392b;"><i class="ti ti-trash"></i></button>
+                      </div>
+                    </div>
+                    <div class="hai-hist-detail" id="haiHistDetail2">
+                      <div class="hai-aw-card-lbl" style="margin-bottom:8px;">Trecho da conversa</div>
+                      <div class="hai-hist-detail-msg">Sophie: "Bonjour! Comment puis-je vous aider?" → "Olá! Como posso ajudá-lo?"</div>
+                      <div class="hai-hist-detail-msg">Você: "Obrigado por tudo!" → "Merci pour tout!"</div>
+                      <div style="display:flex;gap:8px;margin-top:10px;">
+                        <button class="hai-btn-g" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('Continuando sessão…')">Continuar</button>
+                        <button class="hai-btn-ghost" style="padding:6px 14px;font-size:11px;" onclick="haiShowToast('📋 Transcrição copiada!')">Copiar tudo</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:none;text-align:center;padding:30px;color:#333;font-family:'DM Sans',sans-serif;font-size:13px;" id="haiHistEmpty">
+                    <i class="ti ti-inbox" style="font-size:32px;color:#222;display:block;margin-bottom:8px;"></i>
+                    Nenhuma conversa encontrada
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ TELA: ALARMES EXPANDIDOS ══ -->
+              <div id="haiScreen-alarm" style="display:none;">
+                <div class="hai-aw-cheader">
+                  <div>
+                    <div class="hai-aw-ctitle">Alarmes configurados</div>
+                    <div class="hai-aw-csub">Alertas entregues diretamente no dispositivo Nexo</div>
+                  </div>
+                  <button class="hai-btn-g" style="padding:8px 16px;font-size:12px;" onclick="haiOpenAlarmModal()"><i class="ti ti-plus"></i> Novo</button>
+                </div>
+
+                <!-- Próximo alarme -->
+                <div style="background:linear-gradient(135deg,rgba(0,51,255,0.1),rgba(83,74,183,0.08));border:1px solid rgba(0,51,255,0.2);border-radius:14px;padding:16px;margin-bottom:4px;">
+                  <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#0033ff;font-family:'DM Sans',sans-serif;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                    <i class="ti ti-clock"></i> PRÓXIMO ALARME
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px;">
+                    <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#f0ede8;" id="haiNextAlarmTime">07:30</div>
+                    <div>
+                      <div style="font-size:12px;color:#888;font-family:'DM Sans',sans-serif;" id="haiNextAlarmLabel">Acordar — Segunda a Sexta</div>
+                      <div style="font-size:11px;color:#0033ff;font-family:'DM Sans',sans-serif;margin-top:2px;" id="haiNextAlarmIn">Em 14h 22min</div>
+                    </div>
+                    <label class="hai-ps-switch" style="margin-left:auto;">
+                      <input type="checkbox" checked onchange="haiShowToast(this.checked?'Próximo alarme ativado':'Próximo alarme desativado')">
+                      <span class="hai-ps-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px;" id="haiAlarmList">
+                  <!-- Alarme 1 -->
+                  <div class="hai-aw-card" id="haiAlarm0">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                      <div style="flex:1;">
+                        <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:#f0ede8;">07:30</div>
+                        <div style="font-size:11px;color:#555;font-family:'DM Sans',sans-serif;margin-top:2px;">Acordar · Seg Ter Qua Qui Sex</div>
+                        <div class="hai-alarm-repeat-row" style="margin-top:8px;">
+                          <span class="hai-alarm-day on">S</span>
+                          <span class="hai-alarm-day on">T</span>
+                          <span class="hai-alarm-day on">Q</span>
+                          <span class="hai-alarm-day on">Q</span>
+                          <span class="hai-alarm-day on">S</span>
+                          <span class="hai-alarm-day">S</span>
+                          <span class="hai-alarm-day">D</span>
+                        </div>
+                        <div class="hai-alarm-type-row" style="margin-top:8px;">
+                          <span class="hai-alarm-type-chip on"><i class="ti ti-vibrate"></i> Vibrar</span>
+                          <span class="hai-alarm-type-chip on"><i class="ti ti-music"></i> Tom</span>
+                          <span class="hai-alarm-type-chip"><i class="ti ti-sun"></i> Gradual</span>
+                        </div>
+                      </div>
+                      <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Alarme 07:30 ativado':'Alarme 07:30 desativado')"><span class="hai-ps-slider"></span></label>
+                    </div>
+                  </div>
+
+                  <!-- Alarme 2 -->
+                  <div class="hai-aw-card" id="haiAlarm1">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                      <div style="flex:1;">
+                        <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:#f0ede8;">12:00</div>
+                        <div style="font-size:11px;color:#555;font-family:'DM Sans',sans-serif;margin-top:2px;">Almoço · Todos os dias</div>
+                        <div class="hai-alarm-repeat-row" style="margin-top:8px;">
+                          <span class="hai-alarm-day on">S</span>
+                          <span class="hai-alarm-day on">T</span>
+                          <span class="hai-alarm-day on">Q</span>
+                          <span class="hai-alarm-day on">Q</span>
+                          <span class="hai-alarm-day on">S</span>
+                          <span class="hai-alarm-day on">S</span>
+                          <span class="hai-alarm-day on">D</span>
+                        </div>
+                        <div class="hai-alarm-type-row" style="margin-top:8px;">
+                          <span class="hai-alarm-type-chip on"><i class="ti ti-vibrate"></i> Vibrar</span>
+                          <span class="hai-alarm-type-chip"><i class="ti ti-music"></i> Tom</span>
+                          <span class="hai-alarm-type-chip"><i class="ti ti-sun"></i> Gradual</span>
+                        </div>
+                      </div>
+                      <label class="hai-ps-switch"><input type="checkbox" onchange="haiShowToast(this.checked?'Alarme 12:00 ativado':'Alarme 12:00 desativado')"><span class="hai-ps-slider"></span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ TELA: MODOS INTELIGENTES ══ -->
+              <div id="haiScreen-modes" style="display:none;">
+                <div class="hai-aw-cheader" style="margin-bottom:14px;">
+                  <div>
+                    <div class="hai-aw-ctitle">Modos Inteligentes</div>
+                    <div class="hai-aw-csub">IA adapta o áudio ao seu contexto atual</div>
+                  </div>
+                </div>
+
+                <!-- Modo ativo atual -->
+                <div class="hai-smart-mode-active" id="haiActiveModeDisplay"
+                  style="background:rgba(0,51,255,0.08);border:1px solid rgba(0,51,255,0.2);">
+                  <div class="hai-sma-ico" style="background:rgba(0,51,255,0.15);">
+                    <i class="ti ti-school" style="color:#0033ff;"></i>
+                  </div>
+                  <div>
+                    <div class="hai-sma-name" id="haiActiveModeTitle">Modo Aula</div>
+                    <div class="hai-sma-desc" id="haiActiveModeDesc">Redução de ruído ativa · Foco no professor</div>
+                  </div>
+                  <div class="hai-sma-status" style="background:rgba(0,51,255,0.15);color:var(--hg);">ATIVO</div>
+                </div>
+
+                <!-- Grid de modos -->
+                <div class="hai-modes-grid">
+                  <div class="hai-mode-btn active-mode" onclick="haiSetMode(this,'Modo Aula','Redução de ruído · Foco no professor','ti-school','#0033ff')">
+                    <div class="hai-mode-ico" style="background:rgba(0,51,255,0.15);">
+                      <i class="ti ti-school" style="color:#0033ff;"></i>
+                    </div>
+                    <div>
+                      <div class="hai-mode-name">Modo Aula</div>
+                      <div class="hai-mode-desc">Foco total no professor</div>
+                    </div>
+                  </div>
+                  <div class="hai-mode-btn" onclick="haiSetMode(this,'Modo Rua','Alertas de perigo · Sons do trânsito amplificados','ti-road','#D85A30')">
+                    <div class="hai-mode-ico" style="background:rgba(216,90,48,0.12);">
+                      <i class="ti ti-road" style="color:#D85A30;"></i>
+                    </div>
+                    <div>
+                      <div class="hai-mode-name">Modo Rua</div>
+                      <div class="hai-mode-desc">Destaca sons perigosos</div>
+                    </div>
+                  </div>
+                  <div class="hai-mode-btn" onclick="haiSetMode(this,'Modo Trabalho','Prioriza chamadas e reuniões · Filtra ruído de escritório','ti-briefcase','#7f77dd')">
+                    <div class="hai-mode-ico" style="background:rgba(83,74,183,0.12);">
+                      <i class="ti ti-briefcase" style="color:#7f77dd;"></i>
+                    </div>
+                    <div>
+                      <div class="hai-mode-name">Modo Trabalho</div>
+                      <div class="hai-mode-desc">Prioriza chamadas</div>
+                    </div>
+                  </div>
+                  <div class="hai-mode-btn" onclick="haiSetMode(this,'Modo Música','Equalização inteligente · Separação de canais otimizada','ti-music','#f0b429')">
+                    <div class="hai-mode-ico" style="background:rgba(240,180,41,0.12);">
+                      <i class="ti ti-music" style="color:#f0b429;"></i>
+                    </div>
+                    <div>
+                      <div class="hai-mode-name">Modo Música</div>
+                      <div class="hai-mode-desc">Equalização inteligente</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Equalizer (para modo Música) -->
+                <div id="haiEqSection" style="display:none;">
+                  <div class="hai-aw-card-lbl" style="margin-bottom:8px;">Equalização inteligente</div>
+                  <div class="hai-eq-bars" id="haiEqBars">
+                    <div class="hai-eq-bar" style="height:30%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:50%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:75%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:90%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:70%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:55%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:40%;" onclick="haiCycleEq(this)"></div>
+                    <div class="hai-eq-bar" style="height:25%;" onclick="haiCycleEq(this)"></div>
+                  </div>
+                  <div class="hai-eq-labels">
+                    <span class="hai-eq-label">60Hz</span>
+                    <span class="hai-eq-label">125</span>
+                    <span class="hai-eq-label">250</span>
+                    <span class="hai-eq-label">500</span>
+                    <span class="hai-eq-label">1k</span>
+                    <span class="hai-eq-label">2k</span>
+                    <span class="hai-eq-label">4k</span>
+                    <span class="hai-eq-label">8k</span>
+                  </div>
+                </div>
+
+                <!-- Detecção de ambiente -->
+                <div class="hai-env-detect">
+                  <div class="hai-env-header">
+                    <span class="hai-env-title"><i class="ti ti-radar" style="font-size:12px;"></i> Detecção de ambiente</span>
+                    <button class="hai-env-scan-btn" onclick="haiScanEnvironment()">
+                      <i class="ti ti-refresh"></i> Escanear
+                    </button>
+                  </div>
+                  <div class="hai-env-chips" id="haiEnvChips">
+                    <div class="hai-env-chip" id="haiEnv-restaurante" onclick="haiSelectEnv(this,'Restaurante')"><i class="ti ti-tools-kitchen-2"></i> Restaurante</div>
+                    <div class="hai-env-chip" id="haiEnv-transito" onclick="haiSelectEnv(this,'Trânsito')"><i class="ti ti-car"></i> Trânsito</div>
+                    <div class="hai-env-chip" id="haiEnv-cinema" onclick="haiSelectEnv(this,'Cinema')"><i class="ti ti-movie"></i> Cinema</div>
+                    <div class="hai-env-chip" id="haiEnv-escritorio" onclick="haiSelectEnv(this,'Escritório')"><i class="ti ti-building"></i> Escritório</div>
+                    <div class="hai-env-chip" id="haiEnv-academia" onclick="haiSelectEnv(this,'Academia')"><i class="ti ti-barbell"></i> Academia</div>
+                    <div class="hai-env-chip" id="haiEnv-externo" onclick="haiSelectEnv(this,'Área externa')"><i class="ti ti-leaf"></i> Área externa</div>
+                  </div>
+                </div>
+
+                <!-- Perfil na nuvem -->
+                <div class="hai-cloud-row">
+                  <i class="ti ti-cloud hai-cloud-ico"></i>
+                  <div class="hai-cloud-info">
+                    <div class="hai-cloud-name">Perfil sincronizado</div>
+                    <div class="hai-cloud-sub">Último sync: agora · 3 dispositivos</div>
+                  </div>
+                  <button class="hai-cloud-sync-btn" onclick="haiSyncCloud()"><i class="ti ti-refresh"></i> Sync</button>
+                </div>
+              </div>
+
+              <!-- ══ TELA: SEGURANÇA ══ -->
+              <div id="haiScreen-security" style="display:none;">
+                <div class="hai-aw-cheader" style="margin-bottom:16px;">
+                  <div>
+                    <div class="hai-aw-ctitle">Segurança</div>
+                    <div class="hai-aw-csub">Proteção inteligente 24/7</div>
+                  </div>
+                </div>
+
+                <!-- Botão SOS -->
+                <button class="hai-sos-btn" id="haiSOSBtn" onclick="haiTriggerSOS()">
+                  <i class="ti ti-alert-triangle"></i> BOTÃO SOS
+                </button>
+                <div class="hai-sos-hint">Segure 3s ou diga "Nexo, SOS!" para acionar</div>
+
+                <!-- Alerta de som perigoso -->
+                <div class="hai-danger-alert" id="haiDangerAlert">
+                  <div class="hai-danger-dot"></div>
+                  <div class="hai-danger-txt" id="haiDangerTxt">⚠️ Som perigoso detectado: buzina de emergência próxima</div>
+                  <button class="hai-danger-dismiss" onclick="document.getElementById('haiDangerAlert').classList.remove('show')">✕</button>
+                </div>
+
+                <!-- Grid de funções de segurança -->
+                <div class="hai-sec-grid" style="margin-top:14px;">
+                  <div class="hai-sec-card" id="haiSecLoc" onclick="haiToggleSecurity('haiSecLoc','Localização compartilhada')">
+                    <div class="hai-sec-card-ico" style="background:rgba(0,51,255,0.12);">
+                      <i class="ti ti-map-pin" style="color:#0033ff;"></i>
+                    </div>
+                    <div class="hai-sec-card-name">Localização</div>
+                    <div class="hai-sec-card-status" id="haiSecLocStatus">Toque para ativar</div>
+                  </div>
+                  <div class="hai-sec-card" id="haiSecFall" onclick="haiToggleSecurity('haiSecFall','Detecção de quedas')">
+                    <div class="hai-sec-card-ico" style="background:rgba(240,180,41,0.12);">
+                      <i class="ti ti-activity" style="color:#f0b429;"></i>
+                    </div>
+                    <div class="hai-sec-card-name">Detecção de quedas</div>
+                    <div class="hai-sec-card-status" id="haiSecFallStatus">Toque para ativar</div>
+                  </div>
+                  <div class="hai-sec-card" id="haiSecSound" onclick="haiToggleSecurity('haiSecSound','Alerta de sons perigosos')">
+                    <div class="hai-sec-card-ico" style="background:rgba(231,76,60,0.12);">
+                      <i class="ti ti-ear" style="color:#e74c3c;"></i>
+                    </div>
+                    <div class="hai-sec-card-name">Sons perigosos</div>
+                    <div class="hai-sec-card-status" id="haiSecSoundStatus">Toque para ativar</div>
+                  </div>
+                  <div class="hai-sec-card" id="haiSecVoiceSOS" onclick="haiToggleSecurity('haiSecVoiceSOS','SOS por voz')">
+                    <div class="hai-sec-card-ico" style="background:rgba(83,74,183,0.12);">
+                      <i class="ti ti-microphone" style="color:#7f77dd;"></i>
+                    </div>
+                    <div class="hai-sec-card-name">SOS por voz</div>
+                    <div class="hai-sec-card-status" id="haiSecVoiceSOSStatus">Toque para ativar</div>
+                  </div>
+                </div>
+
+                <!-- Mapa de localização simulado -->
+                <div id="haiLocMapSection" style="display:none;">
+                  <div class="hai-aw-card-lbl" style="margin:12px 0 8px;">Localização atual compartilhada</div>
+                  <div class="hai-loc-map">
+                    <div class="hai-loc-grid"></div>
+                    <div class="hai-loc-pin">
+                      <div class="hai-loc-dot-outer"><div class="hai-loc-dot"></div></div>
+                      <div class="hai-loc-label">Você está aqui</div>
+                    </div>
+                  </div>
+                  <div style="font-size:11px;color:#555;font-family:'DM Sans',sans-serif;margin-top:6px;text-align:center;">
+                    Lat -8.4278, Lng -37.0536 · Arcoverde, PE · Compartilhando com 2 contatos
+                  </div>
+                </div>
+
+                <!-- Contatos de emergência -->
+                <div class="hai-aw-card" style="margin-top:10px;">
+                  <div class="hai-aw-card-lbl" style="margin-bottom:10px;">Contatos de emergência</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;" id="haiEmergContacts">
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--hborder);">
+                      <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,51,255,0.15);display:flex;align-items:center;justify-content:center;">
+                        <i class="ti ti-user" style="color:var(--hg);font-size:14px;"></i>
+                      </div>
+                      <div style="flex:1;font-size:12px;color:#c0bdb8;font-family:'DM Sans',sans-serif;">Maria (Mãe) · +55 87 9xxxx-xxxx</div>
+                      <button class="hai-hist-action" onclick="haiShowToast('📞 Ligando para Maria…')"><i class="ti ti-phone"></i></button>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;">
+                      <div style="width:32px;height:32px;border-radius:50%;background:rgba(83,74,183,0.15);display:flex;align-items:center;justify-content:center;">
+                        <i class="ti ti-user" style="color:var(--hp);font-size:14px;"></i>
+                      </div>
+                      <div style="flex:1;font-size:12px;color:#c0bdb8;font-family:'DM Sans',sans-serif;">João (Amigo) · +55 81 9xxxx-xxxx</div>
+                      <button class="hai-hist-action" onclick="haiShowToast('📞 Ligando para João…')"><i class="ti ti-phone"></i></button>
+                    </div>
+                  </div>
+                  <button class="hai-btn-ghost" style="width:100%;margin-top:10px;padding:8px;font-size:12px;" onclick="haiShowToast('Abrindo contatos…')">
+                    <i class="ti ti-plus"></i> Adicionar contato de emergência
+                  </button>
+                </div>
+              </div>
+
+              <!-- ══ TELA: DISPOSITIVO ══ -->
+              <div id="haiScreen-device" style="display:none;">
+                <div class="hai-aw-cheader">
+                  <div>
+                    <div class="hai-aw-ctitle">Dispositivo Nexo</div>
+                    <div class="hai-aw-csub">Status e informações do hardware</div>
+                  </div>
+                </div>
+                <div class="hai-aw-grid">
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Bateria</div>
+                    <div class="hai-aw-card-val" style="color:#1D9E75;">82%</div>
+                    <div class="hai-aw-card-sub">~6h restantes</div>
+                    <div class="hai-ps-batt-bar" style="margin-top:10px;"><div class="hai-ps-batt-fill" style="background:linear-gradient(90deg,#1D9E75,#28c840);width:82%;"></div></div>
+                  </div>
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Latência atual</div>
+                    <div class="hai-aw-card-val" style="color:#0033ff;" id="haiLatencyVal">18ms</div>
+                    <div class="hai-aw-card-sub">Excelente</div>
+                  </div>
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Versão firmware</div>
+                    <div class="hai-aw-card-val" style="font-size:16px;">v2.4.1</div>
+                    <div class="hai-aw-card-sub" style="color:#1D9E75;">✓ Atualizado</div>
+                  </div>
+                  <div class="hai-aw-card">
+                    <div class="hai-aw-card-lbl">Temperatura</div>
+                    <div class="hai-aw-card-val" style="font-size:16px;">36.2°C</div>
+                    <div class="hai-aw-card-sub">Normal</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ TELA: CONFIGURAÇÕES ══ -->
+              <div id="haiScreen-settings" style="display:none;">
+                <div class="hai-aw-cheader">
+                  <div>
+                    <div class="hai-aw-ctitle">Configurações</div>
+                    <div class="hai-aw-csub">Personalize sua experiência Nexo</div>
+                  </div>
+                </div>
+                <div class="hai-aw-card" style="margin-bottom:12px;">
+                  <div class="hai-ps-title" style="font-size:13px;margin-bottom:12px;">Idiomas</div>
+                  <div style="margin-bottom:10px;">
+                    <div style="font-size:11px;color:#555;font-family:'DM Sans',sans-serif;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Idioma padrão de entrada</div>
+                    <select class="hai-ps-sel" style="width:100%;" onchange="haiShowToast('Configuração salva')">
+                      <option>🇩🇪 Alemão</option><option>🇫🇷 Francês</option><option>🇯🇵 Japonês</option>
+                      <option>🇪🇸 Espanhol</option><option>🇮🇹 Italiano</option><option>🇺🇸 Inglês</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="hai-aw-card">
+                  <div class="hai-ps-title" style="font-size:13px;margin-bottom:4px;">Preferências</div>
+                  <div class="hai-ps-toggle-row">
+                    <div class="hai-ps-toggle-info">
+                      <div class="hai-ps-toggle-name">Tradução automática</div>
+                      <div class="hai-ps-toggle-desc">Iniciar ao detectar fala</div>
+                    </div>
+                    <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Tradução automática: on':'Tradução automática: off')"><span class="hai-ps-slider"></span></label>
+                  </div>
+                  <div class="hai-ps-toggle-row">
+                    <div class="hai-ps-toggle-info">
+                      <div class="hai-ps-toggle-name">Modo surround</div>
+                      <div class="hai-ps-toggle-desc">Isolar voz em ambientes ruidosos</div>
+                    </div>
+                    <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Modo surround: on':'Modo surround: off')"><span class="hai-ps-slider"></span></label>
+                  </div>
+                  <div class="hai-ps-toggle-row">
+                    <div class="hai-ps-toggle-info">
+                      <div class="hai-ps-toggle-name">Salvar conversas</div>
+                      <div class="hai-ps-toggle-desc">Armazenar localmente no dispositivo</div>
+                    </div>
+                    <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Salvar conversas: on':'Salvar conversas: off')"><span class="hai-ps-slider"></span></label>
+                  </div>
+                  <div class="hai-ps-toggle-row" style="border-bottom:none;padding-bottom:0;">
+                    <div class="hai-ps-toggle-info">
+                      <div class="hai-ps-toggle-name">Vibração ao traduzir</div>
+                      <div class="hai-ps-toggle-desc">Feedback háptico no dispositivo</div>
+                    </div>
+                    <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Vibração: on':'Vibração: off')"><span class="hai-ps-slider"></span></label>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /hai-aw-content -->
+          </div><!-- /hai-aw-body -->
+        </div><!-- /hai-app-window -->
+
+        <!-- Painel lateral -->
+        <div class="hai-preview-sidebar">
+          <div class="hai-ps-card">
+            <div class="hai-ps-title">Dispositivo simulado</div>
+            <div class="hai-ps-device">
+              <div class="hai-ps-dev-ico"><i class="ti ti-ear"></i></div>
+              <div>
+                <div class="hai-ps-dev-name">Nexo Pro</div>
+                <div class="hai-ps-dev-status">● Ouvido direito · Conectado</div>
+              </div>
+            </div>
+            <div class="hai-ps-slider-row">
+              <div class="hai-ps-slider-label"><span>Volume de tradução</span><span id="haiVolVal">70%</span></div>
+              <input class="hai-ps-range" type="range" min="0" max="100" value="70"
+                oninput="document.getElementById('haiVolVal').textContent=this.value+'%'">
+            </div>
+            <div class="hai-ps-batt-bar" style="margin-top:12px;"><div class="hai-ps-batt-fill"></div></div>
+            <div style="font-size:11px;color:#333;font-family:'DM Sans',sans-serif;margin-top:5px;display:flex;justify-content:space-between;">
+              <span>Bateria</span><span style="color:#7f77dd;">82%</span>
+            </div>
+          </div>
+
+          <div class="hai-ps-card">
+            <div class="hai-ps-title">Par de idiomas</div>
+            <div class="hai-ps-lang-pair" style="margin-bottom:10px;">
+              <select class="hai-ps-sel" id="haiSelFrom" onchange="haiUpdateLangs()">
+                <option value="🇩🇪 Alemão">🇩🇪 Alemão</option>
+                <option value="🇫🇷 Francês">🇫🇷 Francês</option>
+                <option value="🇯🇵 Japonês">🇯🇵 Japonês</option>
+                <option value="🇪🇸 Espanhol">🇪🇸 Espanhol</option>
+                <option value="🇮🇹 Italiano">🇮🇹 Italiano</option>
+                <option value="🇺🇸 Inglês">🇺🇸 Inglês</option>
+                <option value="🇨🇳 Chinês">🇨🇳 Chinês</option>
+                <option value="🇰🇷 Coreano">🇰🇷 Coreano</option>
+                <option value="🇷🇺 Russo">🇷🇺 Russo</option>
+              </select>
+              <button class="hai-ps-swap-btn" onclick="haiSwapPreviewLangs()" title="Inverter idiomas">
+                <i class="ti ti-arrows-exchange"></i>
+              </button>
+              <select class="hai-ps-sel" id="haiSelTo" onchange="haiUpdateLangs()">
+                <option value="🇧🇷 Português" selected>🇧🇷 Português</option>
+                <option value="🇩🇪 Alemão">🇩🇪 Alemão</option>
+                <option value="🇫🇷 Francês">🇫🇷 Francês</option>
+                <option value="🇯🇵 Japonês">🇯🇵 Japonês</option>
+                <option value="🇪🇸 Espanhol">🇪🇸 Espanhol</option>
+                <option value="🇮🇹 Italiano">🇮🇹 Italiano</option>
+                <option value="🇺🇸 Inglês">🇺🇸 Inglês</option>
+                <option value="🇨🇳 Chinês">🇨🇳 Chinês</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hai-ps-card">
+            <div class="hai-ps-title">Funções ativas</div>
+            <div class="hai-ps-toggle-row">
+              <div class="hai-ps-toggle-info">
+                <div class="hai-ps-toggle-name">IA adaptativa</div>
+                <div class="hai-ps-toggle-desc">Aprende seu vocabulário</div>
+              </div>
+              <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'IA adaptativa ativada':'IA adaptativa desativada')"><span class="hai-ps-slider"></span></label>
+            </div>
+            <div class="hai-ps-toggle-row">
+              <div class="hai-ps-toggle-info">
+                <div class="hai-ps-toggle-name">Modo surround</div>
+                <div class="hai-ps-toggle-desc">Foco na voz principal</div>
+              </div>
+              <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Modo surround ativado':'Modo surround desativado')"><span class="hai-ps-slider"></span></label>
+            </div>
+            <div class="hai-ps-toggle-row" style="border-bottom:none;">
+              <div class="hai-ps-toggle-info">
+                <div class="hai-ps-toggle-name">Subtítulos na tela</div>
+                <div class="hai-ps-toggle-desc">Exibir tradução como texto</div>
+              </div>
+              <label class="hai-ps-switch"><input type="checkbox" onchange="haiShowToast(this.checked?'Subtítulos ativados':'Subtítulos desativados')"><span class="hai-ps-slider"></span></label>
+            </div>
+          </div>
+
+          <button class="hai-btn-g" style="width:100%;text-align:center;padding:14px;" onclick="haiShowToast('✓ Solicitação enviada! Entraremos em contato em breve.')">
+            Solicitar acesso antecipado
+          </button>
+          <button class="hai-btn-ghost" style="width:100%;text-align:center;padding:14px;" onclick="haiShowToast('Abrindo documentação…')">
+            Ver documentação técnica
+          </button>
+        </div>
+
+      </div><!-- /preview-layout -->
+    </div><!-- /panel preview -->
+
+  </div><!-- /hai-inner -->
+</section>
+
+<!-- Toast global -->
+<div class="hai-toast" id="haiToast"><i class="ti ti-check"></i><span id="haiToastMsg"></span></div>
+
+<!-- Modal de criação de alarme -->
+<div class="hai-alarm-modal" id="haiAlarmModal">
+  <div class="hai-alarm-modal-box">
+    <div class="hai-alarm-modal-title">
+      Novo Alarme
+      <button class="hai-alarm-modal-close" onclick="haiCloseAlarmModal()">×</button>
+    </div>
+    <div class="hai-alarm-time-picker">
+      <select class="hai-alarm-time-sel" id="haiNewAlarmH">
+        <script>for(let i=0;i<24;i++){document.write(`<option value="${String(i).padStart(2,'0')}">${String(i).padStart(2,'0')}</option>`)}</script>
+      </select>
+      <span class="hai-alarm-time-colon">:</span>
+      <select class="hai-alarm-time-sel" id="haiNewAlarmM">
+        <option value="00">00</option><option value="15">15</option>
+        <option value="30">30</option><option value="45">45</option>
+      </select>
+    </div>
+
+    <div class="hai-modal-section-lbl">Rótulo</div>
+    <input class="hai-alarm-label-input" id="haiNewAlarmLabel" placeholder="Ex: Acordar, Reunião, Remédio…" style="margin-bottom:16px;" />
+
+    <div class="hai-modal-section-lbl">Dias de repetição</div>
+    <div class="hai-alarm-repeat-row" style="margin-bottom:16px;" id="haiNewAlarmDays">
+      <span class="hai-alarm-day on" data-day="S">S</span>
+      <span class="hai-alarm-day on" data-day="T">T</span>
+      <span class="hai-alarm-day on" data-day="Q">Q</span>
+      <span class="hai-alarm-day on" data-day="Q">Q</span>
+      <span class="hai-alarm-day on" data-day="S">S</span>
+      <span class="hai-alarm-day" data-day="S">S</span>
+      <span class="hai-alarm-day" data-day="D">D</span>
+    </div>
+
+    <div class="hai-modal-section-lbl">Tipo de alerta</div>
+    <div class="hai-alarm-type-row" style="margin-bottom:16px;" id="haiNewAlarmTypes">
+      <span class="hai-alarm-type-chip on"><i class="ti ti-vibrate"></i> Vibrar</span>
+      <span class="hai-alarm-type-chip"><i class="ti ti-music"></i> Tom</span>
+      <span class="hai-alarm-type-chip"><i class="ti ti-sun"></i> Despertar gradual</span>
+    </div>
+
+    <div class="hai-ps-toggle-row">
+      <div class="hai-ps-toggle-info">
+        <div class="hai-alarm-smart-name">Parar em movimento</div>
+        <div class="hai-alarm-smart-sub">Detecta quando você se levanta</div>
+      </div>
+      <label class="hai-ps-switch"><input type="checkbox" checked><span class="hai-ps-slider"></span></label>
+    </div>
+    <div class="hai-ps-toggle-row" style="border-bottom:none;padding-bottom:0;margin-bottom:20px;">
+      <div class="hai-ps-toggle-info">
+        <div class="hai-alarm-smart-name">Integrar com Modo Sono</div>
+        <div class="hai-alarm-smart-sub">Acorda durante fase leve do sono</div>
+      </div>
+      <label class="hai-ps-switch"><input type="checkbox"><span class="hai-ps-slider"></span></label>
+    </div>
+
+    <button class="hai-btn-g" style="width:100%;padding:13px;font-size:14px;" onclick="haiSaveNewAlarm()">
+      <i class="ti ti-check"></i> Salvar alarme
+    </button>
+  </div>
+</div>
+
+<script>
+  /* ══════════════════════════════════════════════════
+     NEXOAPP — Scripts completos com todas as funcionalidades
+  ══════════════════════════════════════════════════ */
+
+  // ── Tabs principais ──
+  function haiTab(id, el) {
+    document.querySelectorAll('.hai-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.hai-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('hai-tab-' + id).classList.add('active');
+  }
+
+  function haiSwapLangs() {
+    const chips = document.querySelectorAll('#hai-tab-app .hai-lang-chip');
+    const tmp = chips[0].textContent;
+    chips[0].textContent = chips[1].textContent;
+    chips[1].textContent = tmp;
+  }
+
+  // ── Relógio ao vivo ──
+  (function haiClock() {
+    const el = document.getElementById('hai-clock');
+    if (!el) return;
+    const tick = () => {
+      const now = new Date();
+      el.textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    };
+    tick(); setInterval(tick, 10000);
+  })();
+
+  // ── Conversa animada no protótipo ──
+  (function haiConvoLoop() {
+    const msgs = [
+      { type:'in',  text:'Sprechen Sie Englisch?',             tr:'"Você fala inglês?"',              author:'Hans' },
+      { type:'out', text:'Um pouco — prefiro português!',                                             author:'Você' },
+      { type:'in',  text:'Das ist kein Problem, ich lerne!',   tr:'"Sem problema, estou aprendendo!"',author:'Hans' },
+      { type:'out', text:'Que ótimo! Vamos praticar juntos.',                                         author:'Você' },
+      { type:'in',  text:'Wunderbar! Bis morgen dann.',        tr:'"Maravilhoso! Até amanhã então."', author:'Hans' },
+    ];
+    let idx = 0;
+    setInterval(() => {
+      const m = msgs[idx++ % msgs.length];
+      const convo = document.getElementById('hai-convo');
+      const bar   = document.getElementById('hai-listen-bar');
+      if (!convo || !bar) return;
+      const b = document.createElement('div');
+      b.className = 'hai-bubble ' + (m.type === 'in' ? 'hai-b-in' : 'hai-b-out');
+      b.style.cssText = 'opacity:0;transform:translateY(10px);transition:all .3s ease';
+      let html = `<div class="hai-b-text">${m.text}</div>`;
+      if (m.tr) html += `<div class="hai-b-tag">↓ traduzido automaticamente</div><div class="hai-b-tr">${m.tr}</div>`;
+      html += `<div class="hai-b-meta">${m.author} · agora</div>`;
+      b.innerHTML = html;
+      convo.insertBefore(b, bar);
+      requestAnimationFrame(() => { b.style.opacity = '1'; b.style.transform = 'translateY(0)'; });
+      const bubbles = convo.querySelectorAll('.hai-bubble');
+      if (bubbles.length > 6) bubbles[0].remove();
+    }, 4000);
+  })();
+
+  // ── Latência animada ──
+  setInterval(() => {
+    const el = document.getElementById('haiLatencyVal');
+    const el2 = document.getElementById('hai-latency-proto');
+    const val = (Math.floor(Math.random()*8)+14) + 'ms';
+    if (el) el.textContent = val;
+    if (el2) el2.textContent = val;
+  }, 3000);
+
+  // ── Navegação entre telas do app simulado ──
+  const haiAllScreens = ['translate','history','alarm','modes','security','device','settings'];
+  function haiNavSwitch(screen, el) {
+    document.querySelectorAll('.hai-aw-sitem').forEach(i => i.classList.remove('on'));
+    el.classList.add('on');
+    haiAllScreens.forEach(s => {
+      const sc = document.getElementById('haiScreen-' + s);
+      if (sc) sc.style.display = s === screen ? '' : 'none';
+    });
+  }
+
+  // ── Toast ──
+  let haiToastTimer = null;
+  function haiShowToast(msg) {
+    const toast = document.getElementById('haiToast');
+    const txt   = document.getElementById('haiToastMsg');
+    if (!toast || !txt) return;
+    txt.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(haiToastTimer);
+    haiToastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // ── Dados de idiomas ──
+  const haiLangData = {
+    '🇩🇪 Alemão': {
+      flag: '🇩🇪', name: 'Alemão',
+      outgoing: { 'olá':'Hallo!','bom dia':'Guten Morgen!','boa tarde':'Guten Tag!','boa noite':'Gute Nacht!','obrigado':'Danke schön!','obrigada':'Danke schön!','como vai':'Wie geht es Ihnen?','onde fica':'Wo befindet sich das?','quanto custa':'Wie viel kostet das?','ajuda':'Hilfe bitte!','sim':'Ja, natürlich.','não':'Nein, danke.','por favor':'Bitte!','desculpe':'Entschuldigung.','até logo':'Auf Wiedersehen!','tchau':'Tschüss!','preciso':'Ich brauche…','produto':'Ich brauche Produktinformationen.','banheiro':'Wo ist die Toilette?','devagar':'Bitte langsamer.','prazer':'Schön, Sie kennenzulernen.' },
+      incoming: [ { text:'Verstanden, danke!',tr:'"Entendido, obrigado!"' },{ text:'Natürlich, gern geschehen!',tr:'"Claro, com prazer!"' },{ text:'Wie kann ich helfen?',tr:'"Como posso ajudar?"' },{ text:'Kein Problem!',tr:'"Sem problema!"' },{ text:'Bitte sehr!',tr:'"De nada!"' } ]
+    },
+    '🇫🇷 Francês': {
+      flag: '🇫🇷', name: 'Francês',
+      outgoing: { 'olá':'Bonjour!','bom dia':'Bonjour!','boa tarde':'Bon après-midi!','boa noite':'Bonne nuit!','obrigado':'Merci beaucoup!','obrigada':'Merci beaucoup!','como vai':'Comment allez-vous?','quanto custa':'Combien ça coûte?','ajuda':'Aidez-moi, s\'il vous plaît!','sim':'Oui, bien sûr.','não':'Non, merci.','por favor':'S\'il vous plaît!','desculpe':'Excusez-moi.','até logo':'Au revoir!','tchau':'Au revoir!','banheiro':'Où sont les toilettes?','devagar':'Plus lentement, s\'il vous plaît.','prazer':'Enchanté(e).' },
+      incoming: [ { text:'Bien sûr, avec plaisir!',tr:'"Claro, com prazer!"' },{ text:'Je comprends, merci.',tr:'"Entendo, obrigado."' },{ text:'Comment puis-je aider?',tr:'"Como posso ajudar?"' },{ text:'Pas de problème!',tr:'"Sem problema!"' },{ text:'De rien!',tr:'"De nada!"' } ]
+    },
+    '🇯🇵 Japonês': {
+      flag: '🇯🇵', name: 'Japonês',
+      outgoing: { 'olá':'こんにちは！','bom dia':'おはようございます！','boa noite':'こんばんは！','obrigado':'ありがとうございます！','obrigada':'ありがとうございます！','como vai':'お元気ですか？','quanto custa':'おいくらですか？','ajuda':'すみません、助けてください！','sim':'はい、もちろんです。','não':'いいえ、結構です。','por favor':'お願いします。','desculpe':'すみません。','até logo':'さようなら！','banheiro':'トイレはどこですか？','devagar':'ゆっくり話してください。','prazer':'はじめまして。' },
+      incoming: [ { text:'わかりました、ありがとう！',tr:'"Entendido, obrigado!"' },{ text:'もちろん、喜んで！',tr:'"Claro, com prazer!"' },{ text:'どうすればいいですか？',tr:'"Como posso ajudar?"' },{ text:'問題ありません！',tr:'"Sem problema!"' },{ text:'どういたしまして！',tr:'"De nada!"' } ]
+    },
+    '🇪🇸 Espanhol': {
+      flag: '🇪🇸', name: 'Espanhol',
+      outgoing: { 'olá':'¡Hola!','bom dia':'¡Buenos días!','boa tarde':'¡Buenas tardes!','boa noite':'¡Buenas noches!','obrigado':'¡Muchas gracias!','obrigada':'¡Muchas gracias!','como vai':'¿Cómo está usted?','quanto custa':'¿Cuánto cuesta?','ajuda':'¡Ayúdeme, por favor!','sim':'Sí, por supuesto.','não':'No, gracias.','por favor':'¡Por favor!','desculpe':'Disculpe.','até logo':'¡Hasta luego!','tchau':'¡Adiós!','banheiro':'¿Dónde está el baño?','devagar':'Más despacio, por favor.','prazer':'Encantado(a).' },
+      incoming: [ { text:'¡Entendido, gracias!',tr:'"Entendido, obrigado!"' },{ text:'¡Con mucho gusto!',tr:'"Com prazer!"' },{ text:'¿En qué puedo ayudar?',tr:'"Em que posso ajudar?"' },{ text:'¡No hay problema!',tr:'"Sem problema!"' },{ text:'¡De nada!',tr:'"De nada!"' } ]
+    },
+    '🇮🇹 Italiano': {
+      flag: '🇮🇹', name: 'Italiano',
+      outgoing: { 'olá':'Ciao!','bom dia':'Buongiorno!','obrigado':'Grazie mille!','obrigada':'Grazie mille!','como vai':'Come sta?','quanto custa':'Quanto costa?','ajuda':'Aiutami, per favore!','sim':'Sì, certamente.','não':'No, grazie.','por favor':'Per favore!','desculpe':'Mi scusi.','até logo':'Arrivederci!','tchau':'Ciao!','banheiro':'Dov\'è il bagno?','devagar':'Più lentamente, per favore.','prazer':'Piacere di conoscerti.' },
+      incoming: [ { text:'Capito, grazie!',tr:'"Entendido, obrigado!"' },{ text:'Con piacere!',tr:'"Com prazer!"' },{ text:'Come posso aiutare?',tr:'"Como posso ajudar?"' },{ text:'Nessun problema!',tr:'"Sem problema!"' },{ text:'Prego!',tr:'"De nada!"' } ]
+    },
+    '🇺🇸 Inglês': {
+      flag: '🇺🇸', name: 'Inglês',
+      outgoing: { 'olá':'Hello!','bom dia':'Good morning!','boa tarde':'Good afternoon!','boa noite':'Good night!','obrigado':'Thank you very much!','obrigada':'Thank you very much!','como vai':'How are you?','quanto custa':'How much does it cost?','ajuda':'Help me, please!','sim':'Yes, of course.','não':'No, thank you.','por favor':'Please!','desculpe':'Excuse me.','até logo':'Goodbye!','tchau':'Bye!','banheiro':'Where is the bathroom?','devagar':'Please speak more slowly.','prazer':'Nice to meet you.' },
+      incoming: [ { text:'Understood, thank you!',tr:'"Entendido, obrigado!"' },{ text:'Of course, with pleasure!',tr:'"Claro, com prazer!"' },{ text:'How can I help?',tr:'"Como posso ajudar?"' },{ text:'No problem at all!',tr:'"Sem problema!"' },{ text:'You\'re welcome!',tr:'"De nada!"' } ]
+    },
+    '🇨🇳 Chinês': {
+      flag: '🇨🇳', name: 'Chinês',
+      outgoing: { 'olá':'你好！','bom dia':'早上好！','boa noite':'晚上好！','obrigado':'非常感谢！','obrigada':'非常感谢！','como vai':'你好吗？','quanto custa':'这个多少钱？','ajuda':'请帮帮我！','sim':'是的，当然。','não':'不，谢谢。','por favor':'请！','desculpe':'对不起。','até logo':'再见！','tchau':'拜拜！','banheiro':'洗手间在哪里？','devagar':'请说慢一点。','prazer':'很高兴认识你。' },
+      incoming: [ { text:'明白了，谢谢！',tr:'"Entendido, obrigado!"' },{ text:'当然，很乐意！',tr:'"Claro, com prazer!"' },{ text:'我能帮什么忙？',tr:'"Como posso ajudar?"' },{ text:'没问题！',tr:'"Sem problema!"' },{ text:'不客气！',tr:'"De nada!"' } ]
+    },
+    '🇰🇷 Coreano': {
+      flag: '🇰🇷', name: 'Coreano',
+      outgoing: { 'olá':'안녕하세요!','bom dia':'좋은 아침이에요!','obrigado':'감사합니다!','obrigada':'감사합니다!','sim':'네, 물론이죠.','não':'아니요, 괜찮아요.','por favor':'부탁드립니다!','desculpe':'실례합니다.','até logo':'안녕히 가세요!','banheiro':'화장실이 어디에 있어요?','prazer':'만나서 반갑습니다.' },
+      incoming: [ { text:'알겠습니다, 감사합니다!',tr:'"Entendido, obrigado!"' },{ text:'물론이죠, 기꺼이!',tr:'"Claro, com prazer!"' },{ text:'어떻게 도와드릴까요?',tr:'"Como posso ajudar?"' },{ text:'문제없어요!',tr:'"Sem problema!"' },{ text:'천만에요!',tr:'"De nada!"' } ]
+    },
+    '🇷🇺 Russo': {
+      flag: '🇷🇺', name: 'Russo',
+      outgoing: { 'olá':'Привет!','bom dia':'Доброе утро!','obrigado':'Большое спасибо!','obrigada':'Большое спасибо!','sim':'Да, конечно.','não':'Нет, спасибо.','por favor':'Пожалуйста!','desculpe':'Извините.','até logo':'До свидания!','banheiro':'Где туалет?','prazer':'Приятно познакомиться.' },
+      incoming: [ { text:'Понятно, спасибо!',tr:'"Entendido, obrigado!"' },{ text:'Конечно, с удовольствием!',tr:'"Claro, com prazer!"' },{ text:'Чем могу помочь?',tr:'"Como posso ajudar?"' },{ text:'Нет проблем!',tr:'"Sem problema!"' },{ text:'Пожалуйста!',tr:'"De nada!"' } ]
+    },
+  };
+
+  function haiGetFromLang() { return document.getElementById('haiSelFrom')?.value || '🇩🇪 Alemão'; }
+  function haiGetToLang() { return document.getElementById('haiSelTo')?.value || '🇧🇷 Português'; }
+
+  // ── Preview de tradução ao vivo ──
+  let haiPreviewTimer = null;
+  function haiPreviewTranslation(val) {
+    const preview = document.getElementById('haiTransPreview');
+    const previewText = document.getElementById('haiTransPreviewText');
+    const previewTarget = document.getElementById('haiTransPreviewTarget');
+    if (!preview) return;
+    if (!val || val.trim().length < 2) { preview.style.display = 'none'; return; }
+    clearTimeout(haiPreviewTimer);
+    haiPreviewTimer = setTimeout(() => {
+      const fromKey = haiGetFromLang();
+      const langData = haiLangData[fromKey] || haiLangData['🇩🇪 Alemão'];
+      const lower = val.toLowerCase();
+      let translated = null;
+      for (const key in langData.outgoing) {
+        if (lower.includes(key)) { translated = langData.outgoing[key]; break; }
+      }
+      if (!translated) translated = `[${langData.name}] ${val.trim()}`;
+      previewText.textContent = translated;
+      previewTarget.innerHTML = `— em <strong>${langData.name}</strong> ${langData.flag} · via Nexo`;
+      preview.style.display = 'block';
+    }, 350);
+  }
+
+  // ── Enviar mensagem ──
+  function haiSendMsg() {
+    const input = document.getElementById('haiChatInput');
+    const msgs  = document.getElementById('haiChatMsgs');
+    const status = document.getElementById('haiTransStatus');
+    const preview = document.getElementById('haiTransPreview');
+    if (!input || !msgs) return;
+    const val = input.value.trim();
+    if (!val) return;
+    const fromKey = haiGetFromLang();
+    const langData = haiLangData[fromKey] || haiLangData['🇩🇪 Alemão'];
+    const lower = val.toLowerCase();
+    let outTranslated = null;
+    for (const key in langData.outgoing) {
+      if (lower.includes(key)) { outTranslated = langData.outgoing[key]; break; }
+    }
+    if (!outTranslated) outTranslated = `[${langData.name}] ${val}`;
+    if (preview) preview.style.display = 'none';
+    const outDiv = document.createElement('div');
+    outDiv.className = 'hai-aw-msg out';
+    outDiv.style.cssText = 'opacity:0;transform:translateY(8px);transition:all .25s';
+    outDiv.innerHTML = `
+      <div class="hai-aw-msg-bubble">${val}</div>
+      <div class="hai-aw-msg-tr" style="color:#8888ff;font-style:italic;font-size:11px;margin-top:3px;">→ traduzido para ${langData.name}: "${outTranslated}"</div>
+      <div class="hai-aw-msg-who">Você · agora</div>
+      <div class="hai-aw-msg-actions">
+        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem copiada!')"><i class="ti ti-copy"></i> Copiar</button>
+        <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem editada!')"><i class="ti ti-edit"></i> Editar</button>
+      </div>`;
+    msgs.appendChild(outDiv);
+    requestAnimationFrame(() => { outDiv.style.opacity='1'; outDiv.style.transform='translateY(0)'; });
+    input.value = '';
+    msgs.scrollTop = msgs.scrollHeight;
+    if (status) status.style.display = 'flex';
+    const badge = document.getElementById('haiDetectBadge');
+    const badgeName = document.getElementById('haiDetectLangName');
+    const badgeFlag = document.getElementById('haiDetectFlag');
+    if (badge) {
+      badge.style.display = 'inline-flex';
+      if (badgeName) badgeName.textContent = langData.name;
+      if (badgeFlag) badgeFlag.textContent = langData.flag;
+    }
+    setTimeout(() => {
+      if (status) status.style.display = 'none';
+      const responses = langData.incoming;
+      const resp = responses[Math.floor(Math.random() * responses.length)];
+      const inDiv = document.createElement('div');
+      inDiv.className = 'hai-aw-msg in';
+      inDiv.style.cssText = 'opacity:0;transform:translateY(8px);transition:all .25s';
+      inDiv.innerHTML = `
+        <div class="hai-aw-msg-bubble">${resp.text}</div>
+        <div class="hai-aw-msg-tr">↓ ${resp.tr}</div>
+        <div class="hai-aw-msg-lang-badge"><i class="ti ti-language"></i> Detectado: ${langData.name} ${langData.flag}</div>
+        <div class="hai-aw-msg-who">Interlocutor · agora</div>
+        <div class="hai-aw-msg-actions">
+          <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Mensagem copiada!')"><i class="ti ti-copy"></i> Copiar</button>
+          <button class="hai-aw-msg-action-btn" onclick="haiShowToast('Adicionado aos favoritos!')"><i class="ti ti-bookmark"></i> Salvar</button>
+        </div>`;
+      msgs.appendChild(inDiv);
+      requestAnimationFrame(() => { inDiv.style.opacity='1'; inDiv.style.transform='translateY(0)'; });
+      msgs.scrollTop = msgs.scrollHeight;
+      haiShowToast(`✓ Tradução de ${langData.name} entregue via Nexo`);
+    }, 900);
+  }
+
+  // ── Microfone simulado ──
+  let haiMicActive = false;
+  const haiMicPhrases = ['Preciso de ajuda por favor.','Onde fica o banheiro?','Quanto custa isso?','Bom dia! Tudo bem?','Obrigado pela ajuda!','Pode repetir mais devagar?'];
+  function haiToggleMic() {
+    const btn = document.getElementById('haiMicBtn');
+    const input = document.getElementById('haiChatInput');
+    if (!btn || !input) return;
+    if (!haiMicActive) {
+      haiMicActive = true;
+      btn.classList.add('listening');
+      btn.innerHTML = '<i class="ti ti-microphone-off"></i>';
+      haiShowToast('🎙 Ouvindo…');
+      setTimeout(() => {
+        const phrase = haiMicPhrases[Math.floor(Math.random() * haiMicPhrases.length)];
+        input.value = phrase;
+        haiMicActive = false;
+        btn.classList.remove('listening');
+        btn.innerHTML = '<i class="ti ti-microphone"></i>';
+        haiPreviewTranslation(phrase);
+        haiShowToast('✓ Fala detectada! Pressione Enviar ou Enter.');
+      }, 2000);
+    } else {
+      haiMicActive = false;
+      btn.classList.remove('listening');
+      btn.innerHTML = '<i class="ti ti-microphone"></i>';
+    }
+  }
+
+  // ── Atualizar idiomas ──
+  function haiUpdateLangs() {
+    const from = document.getElementById('haiSelFrom')?.value || '';
+    const to   = document.getElementById('haiSelTo')?.value || '';
+    const fl   = from.split(' ')[0];
+    const tl   = to.split(' ')[0];
+    const lf   = document.getElementById('haiLangFrom');
+    const lt   = document.getElementById('haiLangTo');
+    const cl   = document.getElementById('haiChatLangLabel');
+    if (lf) lf.textContent = from;
+    if (lt) lt.textContent = to;
+    if (cl) cl.textContent = fl + ' → ' + tl;
+    const inp = document.getElementById('haiChatInput');
+    if (inp) inp.placeholder = `Digite sua mensagem em ${(to || '🇧🇷 Português').replace(/^\S+\s/,'')}…`;
+    const inputVal = document.getElementById('haiChatInput')?.value || '';
+    if (inputVal.trim().length >= 2) haiPreviewTranslation(inputVal);
+    haiShowToast('Par de idiomas atualizado');
+  }
+
+  function haiSwapPreviewLangs() {
+    const sf = document.getElementById('haiSelFrom');
+    const st = document.getElementById('haiSelTo');
+    if (!sf || !st) return;
+    const tmpv = sf.value; sf.value = st.value; st.value = tmpv;
+    haiUpdateLangs();
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── HISTÓRICO EXPANDIDO ──
+  ══════════════════════════════════════════════════ */
+  const haiStarState = [[3,true],[5,true],[2,true]]; // stars count, fav
+  
+  function haiToggleStar(cardIdx, starIdx) {
+    const container = document.getElementById('haiStars' + cardIdx);
+    if (!container) return;
+    const stars = container.querySelectorAll('.hai-hist-star');
+    stars.forEach((s, i) => s.classList.toggle('filled', i <= starIdx));
+    haiStarState[cardIdx] = [starIdx + 1, starIdx + 1 >= 4];
+    haiShowToast(`⭐ ${starIdx + 1} estrela${starIdx > 0 ? 's' : ''} atribuída${starIdx > 0 ? 's' : ''}!`);
+  }
+
+  function haiToggleHistDetail(idx) {
+    const detail = document.getElementById('haiHistDetail' + idx);
+    if (!detail) return;
+    const isOpen = detail.classList.contains('show');
+    document.querySelectorAll('.hai-hist-detail').forEach(d => d.classList.remove('show'));
+    if (!isOpen) detail.classList.add('show');
+  }
+
+  function haiDeleteHist(idx) {
+    const card = document.getElementById('haiHistCard' + idx);
+    if (!card) return;
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-20px)';
+    setTimeout(() => { card.remove(); haiUpdateHistCount(); }, 300);
+    haiShowToast('🗑 Conversa removida');
+  }
+
+  function haiUpdateHistCount() {
+    const visible = document.querySelectorAll('#haiHistList .hai-aw-card:not([style*="opacity: 0"])').length;
+    const total = document.getElementById('haiHistTotal');
+    if (total) total.textContent = visible;
+    const empty = document.getElementById('haiHistEmpty');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  function haiClearHistory() {
+    const cards = document.querySelectorAll('#haiHistList .hai-aw-card');
+    cards.forEach((c, i) => {
+      setTimeout(() => {
+        c.style.transition = 'all .25s';
+        c.style.opacity = '0';
+        c.style.transform = 'translateX(-20px)';
+        setTimeout(() => c.remove(), 250);
+      }, i * 80);
+    });
+    setTimeout(() => {
+      haiUpdateHistCount();
+      haiShowToast('🗑 Histórico limpo');
+    }, cards.length * 80 + 300);
+  }
+
+  function haiHistTab(tab, el) {
+    document.querySelectorAll('.hai-hist-filter').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+    const items = document.querySelectorAll('#haiHistList .hist-item');
+    items.forEach(item => {
+      if (tab === 'all') { item.style.display = ''; return; }
+      if (tab === 'fav') { item.style.display = haiStarState[parseInt(item.id.replace('haiHistCard',''))][1] ? '' : 'none'; return; }
+      item.style.display = item.classList.contains('hist-' + tab) ? '' : 'none';
+    });
+    const visible = document.querySelectorAll('#haiHistList .hist-item:not([style*="none"])').length;
+    const empty = document.getElementById('haiHistEmpty');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+    haiShowToast(`Filtro: ${el.textContent}`);
+  }
+
+  function haiFilterHistory(val) {
+    const query = val.toLowerCase();
+    const items = document.querySelectorAll('#haiHistList .hist-item');
+    let visible = 0;
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const show = !query || text.includes(query);
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const empty = document.getElementById('haiHistEmpty');
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── ALARMES EXPANDIDOS ──
+  ══════════════════════════════════════════════════ */
+  function haiOpenAlarmModal() {
+    document.getElementById('haiAlarmModal').classList.add('show');
+    // Clicks nos dias do modal
+    document.querySelectorAll('#haiNewAlarmDays .hai-alarm-day').forEach(d => {
+      d.onclick = () => d.classList.toggle('on');
+    });
+    // Clicks nos tipos
+    document.querySelectorAll('#haiNewAlarmTypes .hai-alarm-type-chip').forEach(c => {
+      c.onclick = () => c.classList.toggle('on');
+    });
+  }
+
+  function haiCloseAlarmModal() {
+    document.getElementById('haiAlarmModal').classList.remove('show');
+  }
+
+  function haiSaveNewAlarm() {
+    const h = document.getElementById('haiNewAlarmH')?.value || '07';
+    const m = document.getElementById('haiNewAlarmM')?.value || '00';
+    const label = document.getElementById('haiNewAlarmLabel')?.value || 'Novo alarme';
+    const activeDays = Array.from(document.querySelectorAll('#haiNewAlarmDays .hai-alarm-day.on'))
+      .map(d => d.textContent).join(' ');
+    const activeTypes = Array.from(document.querySelectorAll('#haiNewAlarmTypes .hai-alarm-type-chip.on'))
+      .map(c => c.textContent.trim()).join(' + ');
+    const list = document.getElementById('haiAlarmList');
+    const card = document.createElement('div');
+    card.className = 'hai-aw-card';
+    card.style.cssText = 'opacity:0;transform:translateY(8px);transition:all .3s';
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="flex:1;">
+          <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:#f0ede8;">${h}:${m}</div>
+          <div style="font-size:11px;color:#888;font-family:'DM Sans',sans-serif;margin-top:2px;">${label}</div>
+          <div style="font-size:10px;color:#555;font-family:'DM Sans',sans-serif;margin-top:2px;">${activeDays || 'Sem repetição'} · ${activeTypes || 'Silencioso'}</div>
+          <div class="hai-alarm-type-row" style="margin-top:8px;">
+            ${activeTypes.includes('Vibrar') ? '<span class="hai-alarm-type-chip on"><i class="ti ti-vibrate"></i> Vibrar</span>' : ''}
+            ${activeTypes.includes('Tom') ? '<span class="hai-alarm-type-chip on"><i class="ti ti-music"></i> Tom</span>' : ''}
+          </div>
+        </div>
+        <label class="hai-ps-switch"><input type="checkbox" checked onchange="haiShowToast(this.checked?'Alarme ativado':'Alarme desativado')"><span class="hai-ps-slider"></span></label>
+      </div>`;
+    list.appendChild(card);
+    requestAnimationFrame(() => { card.style.opacity='1'; card.style.transform='translateY(0)'; });
+    haiCloseAlarmModal();
+    document.getElementById('haiNewAlarmLabel').value = '';
+    haiShowToast(`✓ Alarme ${h}:${m} criado — "${label}"`);
+    // Atualiza próximo alarme
+    const nextTime = document.getElementById('haiNextAlarmTime');
+    const nextLabel = document.getElementById('haiNextAlarmLabel');
+    if (parseInt(h) < 12) {
+      if (nextTime) nextTime.textContent = `${h}:${m}`;
+      if (nextLabel) nextLabel.textContent = `${label} — ${activeDays || 'Hoje'}`;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── MODOS INTELIGENTES ──
+  ══════════════════════════════════════════════════ */
+  const haiModeColors = {
+    'Modo Aula': { bg:'rgba(0,51,255,0.08)', border:'rgba(0,51,255,0.2)', statusBg:'rgba(0,51,255,0.15)', statusColor:'var(--hg)' },
+    'Modo Rua': { bg:'rgba(216,90,48,0.08)', border:'rgba(216,90,48,0.2)', statusBg:'rgba(216,90,48,0.15)', statusColor:'#D85A30' },
+    'Modo Trabalho': { bg:'rgba(83,74,183,0.08)', border:'rgba(83,74,183,0.2)', statusBg:'rgba(83,74,183,0.15)', statusColor:'var(--hp)' },
+    'Modo Música': { bg:'rgba(240,180,41,0.08)', border:'rgba(240,180,41,0.2)', statusBg:'rgba(240,180,41,0.15)', statusColor:'#f0b429' },
+  };
+
+  function haiSetMode(el, name, desc, ico, color) {
+    document.querySelectorAll('.hai-mode-btn').forEach(b => b.classList.remove('active-mode'));
+    el.classList.add('active-mode');
+    const display = document.getElementById('haiActiveModeDisplay');
+    const titleEl = document.getElementById('haiActiveModeTitle');
+    const descEl = document.getElementById('haiActiveModeDesc');
+    if (titleEl) titleEl.textContent = name;
+    if (descEl) descEl.textContent = desc;
+    const mc = haiModeColors[name];
+    if (display && mc) {
+      display.style.background = mc.bg;
+      display.style.borderColor = mc.border;
+      const ico_el = display.querySelector('.hai-sma-ico');
+      const status = display.querySelector('.hai-sma-status');
+      if (ico_el) { ico_el.style.background = mc.statusBg; ico_el.innerHTML = `<i class="ti ${ico}" style="color:${color};font-size:22px;"></i>`; }
+      if (status) { status.style.background = mc.statusBg; status.style.color = mc.statusColor; }
+    }
+    // Mostrar EQ apenas no Modo Música
+    const eqSection = document.getElementById('haiEqSection');
+    if (eqSection) eqSection.style.display = name === 'Modo Música' ? 'block' : 'none';
+    if (name === 'Modo Música') haiAnimateEQ();
+    // Alertas automáticos por modo
+    if (name === 'Modo Rua') {
+      setTimeout(() => {
+        document.getElementById('haiDangerTxt').textContent = '⚠️ Som perigoso detectado: buzina de caminhão próxima';
+        document.getElementById('haiDangerAlert').classList.add('show');
+      }, 2000);
+    }
+    haiShowToast(`✓ ${name} ativado — ${desc.split('·')[0].trim()}`);
+  }
+
+  function haiCycleEq(bar) {
+    const heights = ['20%','35%','50%','65%','80%','95%'];
+    const current = bar.style.height;
+    const idx = heights.indexOf(current);
+    bar.style.height = heights[(idx + 1) % heights.length];
+  }
+
+  let haiEqInterval = null;
+  function haiAnimateEQ() {
+    clearInterval(haiEqInterval);
+    haiEqInterval = setInterval(() => {
+      const bars = document.querySelectorAll('.hai-eq-bar');
+      bars.forEach(bar => {
+        const h = Math.floor(Math.random() * 70) + 20;
+        bar.style.height = h + '%';
+      });
+    }, 400);
+  }
+
+  function haiScanEnvironment() {
+    const btn = document.querySelector('.hai-env-scan-btn');
+    if (btn) { btn.innerHTML = '<i class="ti ti-loader" style="animation:haiSpin .7s linear infinite"></i> Escaneando…'; }
+    document.querySelectorAll('.hai-env-chip').forEach(c => c.classList.remove('detected'));
+    const style = document.createElement('style');
+    style.textContent = '@keyframes haiSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
+    document.head.appendChild(style);
+    const envs = ['haiEnv-escritorio', 'haiEnv-restaurante', 'haiEnv-transito', 'haiEnv-cinema', 'haiEnv-academia', 'haiEnv-externo'];
+    const detected = envs[Math.floor(Math.random() * envs.length)];
+    setTimeout(() => {
+      if (btn) btn.innerHTML = '<i class="ti ti-check"></i> Concluído';
+      const el = document.getElementById(detected);
+      if (el) {
+        el.classList.add('detected');
+        const name = el.textContent.trim();
+        haiShowToast(`🔍 Ambiente detectado: ${name}`);
+        setTimeout(() => { if (btn) btn.innerHTML = '<i class="ti ti-refresh"></i> Escanear'; }, 2000);
+      }
+    }, 2000);
+  }
+
+  function haiSelectEnv(el, name) {
+    document.querySelectorAll('.hai-env-chip').forEach(c => c.classList.remove('detected'));
+    el.classList.add('detected');
+    haiShowToast(`🏠 Ambiente: ${name} — ajustes aplicados automaticamente`);
+  }
+
+  function haiSyncCloud() {
+    haiShowToast('☁️ Sincronizando perfil na nuvem…');
+    setTimeout(() => haiShowToast('✅ Perfil sincronizado com 3 dispositivos!'), 1500);
+  }
+
+  /* ══════════════════════════════════════════════════
+     ── SEGURANÇA ──
+  ══════════════════════════════════════════════════ */
+  const haiSecActive = {};
+  
+  function haiToggleSecurity(cardId, name) {
+    const card = document.getElementById(cardId);
+    const status = document.getElementById(cardId + 'Status');
+    if (!card) return;
+    haiSecActive[cardId] = !haiSecActive[cardId];
+    card.classList.toggle('active-sec', haiSecActive[cardId]);
+    if (status) status.textContent = haiSecActive[cardId] ? '● Ativo' : 'Toque para ativar';
+    haiShowToast(haiSecActive[cardId] ? `✅ ${name} ativado` : `${name} desativado`);
+    // Mostrar mapa se localização ativada
+    if (cardId === 'haiSecLoc') {
+      const mapSection = document.getElementById('haiLocMapSection');
+      if (mapSection) mapSection.style.display = haiSecActive[cardId] ? 'block' : 'none';
+      if (haiSecActive[cardId]) {
+        setTimeout(() => haiShowToast('📍 Localização compartilhada com seus contatos de emergência'), 1000);
+      }
+    }
+    // Mostrar badge ! se alguma função ativa
+    const anyActive = Object.values(haiSecActive).some(v => v);
+    const badge = document.getElementById('haiSecBadge');
+    if (badge) badge.style.display = anyActive ? 'inline' : 'none';
+    // Mostrar alerta de som perigoso se função de sons ativada
+    if (cardId === 'haiSecSound' && haiSecActive[cardId]) {
+      setTimeout(() => {
+        document.getElementById('haiDangerTxt').textContent = '⚠️ Som perigoso detectado: sirene de emergência próxima!';
+        document.getElementById('haiDangerAlert').classList.add('show');
+      }, 3000);
+    }
+  }
+
+  let haiSOSTriggered = false;
+  function haiTriggerSOS() {
+    if (haiSOSTriggered) return;
+    haiSOSTriggered = true;
+    const btn = document.getElementById('haiSOSBtn');
+    if (btn) btn.classList.add('triggered');
+    haiShowToast('🚨 SOS ACIONADO! Notificando contatos de emergência…');
+    // Ativa localização automaticamente
+    const locCard = document.getElementById('haiSecLoc');
+    const locStatus = document.getElementById('haiSecLocStatus');
+    if (locCard && !haiSecActive['haiSecLoc']) {
+      haiSecActive['haiSecLoc'] = true;
+      locCard.classList.add('active-sec');
+      if (locStatus) locStatus.textContent = '● Ativo';
+      const mapSection = document.getElementById('haiLocMapSection');
+      if (mapSection) mapSection.style.display = 'block';
+    }
+    setTimeout(() => { haiShowToast('📞 Ligando para Maria (Mãe)…'); }, 1200);
+    setTimeout(() => { haiShowToast('📍 Localização enviada para seus contatos!'); }, 2400);
+    setTimeout(() => {
+      haiSOSTriggered = false;
+      if (btn) btn.classList.remove('triggered');
+    }, 5000);
+  }
+
+  // Simulação de SOS por voz: ouvir "SOS"
+  document.addEventListener('keydown', e => {
+    if (e.key === 's' && e.ctrlKey) { e.preventDefault(); haiTriggerSOS(); }
+  });
+
+  // Inicializar badge de segurança como visível
+  setTimeout(() => {
+    const badge = document.getElementById('haiSecBadge');
+    if (badge) badge.style.display = 'inline';
+  }, 500);
+</script>
+<!-- ── FIM HEARAI SECTION EXPANDIDA ── -->
